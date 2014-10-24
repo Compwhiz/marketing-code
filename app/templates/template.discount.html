@@ -1,0 +1,37 @@
+<div class="columns small-2">
+    <input type="button" class="button small expand" value="Edit">
+</div>
+<div class="columns small-10">
+    <div class="row">
+        <div class="columns small-3">
+            {{discount.displayType}} {{discount.displayAmount}}
+        </div>
+        <div class="columns small-3">
+            <ul class="no-bullet">
+                <li>
+                    {{discount.target}}
+                </li>
+            </ul>
+        </div>
+        <div class="columns small-6">
+            <div class="row">
+                <div class="columns large-6">
+                    <strong>Start Date</strong>
+                    <div>{{discount.displayStartDate}}</div>
+                </div>
+                <div class="columns large-6">
+                    <strong>End Date</strong>
+                    <div>{{discount.displayEndDate}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="columns">
+            <h5>Discount Qualifiers</h5>
+            {{discount.qualifiers}}
+        </div>
+    </div>
+</div>
+</div>

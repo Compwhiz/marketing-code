@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="columns">
+        <p>
+            Click select on the marketing code you wish to edit or view.
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="columns">
+        <a href="/#/marketingCode/" class="button">Create New Code</a>
+    </div>
+</div>
+<div class="row altrowcolor">
+    <div class="columns small-offset-2 small-2">
+        <a href="">
+            <strong>Code</strong>
+        </a>
+    </div>
+    <div class="columns small-3">
+        <a href="">
+            <strong>Code Type</strong>
+        </a>
+    </div>
+    <div class="columns small-2"><a href="">Is Active</a>
+    </div>
+    <div class="columns small-3 show-for-large-up">
+        Description
+    </div>
+</div>
+<div class="row" ng-repeat="code in main.codes" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'">
+    <div class="columns small-2">
+        <a href="/#/marketingCode/{{code.id}}" class="button small expand">Select</a>
+    </div>
+    <div class="columns small-2">{{code.code}}</div>
+    <div class="columns small-3">{{code.codeType}}</div>
+    <div class="columns small-2">
+        <span class="fa fa-2x" ng-class="code.isActive ? 'fa-check green' : 'fa-times red'"></span>
+    </div>
+    <div class="columns large-3 small-10">
+        {{code.description}}</div>
+</div>

@@ -1,0 +1,102 @@
+<!doctype html>
+<html class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/foundation/css/foundation.css" />
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+
+    <!-- pickadate -->
+    <link rel="stylesheet" href="bower_components\pickadate\lib\themes\default.css" />
+    <link rel="stylesheet" href="bower_components\pickadate\lib\themes\default.date.css" />
+    <link rel="stylesheet" href="bower_components\pickadate\lib\themes\default.time.css" />
+
+
+</head>
+
+<body ng-app="marketingCodeApp">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <nav class="top-bar" role="navigation" data-topbar>
+        <ul class="title-area">
+            <li class="name">
+                <h1><a href="#">Marketing Code Utility</a>
+                </h1>
+            </li>
+        </ul>
+        <section class="top-bar-section">
+
+        </section>
+    </nav>
+
+  <br>
+  
+    <!-- Add your site or application content here -->
+    <div ng-view=""></div>
+
+    <div id="footer" class="text-center">This is the footer</div>
+
+    <!-- build:js(.) scripts/oldieshim.js -->
+    <!--[if lt IE 9]>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.js"></script>
+    <![endif]-->
+    <!-- endbuild -->
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/modernizr/modernizr.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/fastclick/lib/fastclick.js"></script>
+    <script src="bower_components/jquery.cookie/jquery.cookie.js"></script>
+    <script src="bower_components/jquery-placeholder/jquery.placeholder.js"></script>
+    <script src="bower_components/foundation/js/foundation.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/pickadate/lib/picker.js"></script>
+    <script src="bower_components/pickadate/lib/picker.date.js"></script>
+    <script src="bower_components/pickadate/lib/picker.time.js"></script>
+    <script src="bower_components/angular-foundation/mm-foundation-tpls.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/directives/directive.discount.js"></script>
+    <script src="scripts/directives/directive.qualifier.js"></script>
+    <script src="scripts/services/factory.discount.js"></script>
+    <script src="scripts/services/factory.marketingcode.js"></script>
+    <script src="scripts/directives/directive.marketingcode.js"></script>
+    <script src="scripts/controllers/marketingcode.js"></script>
+    <script src="scripts/directives/directive.pickadate.js"></script>
+    <script src="scripts/directives/directive.pickatime.js"></script>
+    <script src="scripts/services/factory.qualifier.js"></script>
+    <script src="scripts/directives/directive.qualifieredit.js"></script>
+    <script src="scripts/services/factory.businessclassfactory.js"></script>
+    <!-- endbuild -->
+
+</body>
+
+</html>

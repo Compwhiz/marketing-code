@@ -1,206 +1,214 @@
-<div class="row">
-    <div class="columns large-10">
-        <div class="row">
-            <div class="columns small-3">Is Active</div>
-            <div class="columns small-offset-1 large-5 small-8 end">
-                <div class="switch">
-                    <input type="checkbox" id="cbIsActive" ng-model="ctrl.code.isActive">
-                    <label for="cbIsActive"></label>
-                </div>
-            </div>
-        </div>
-    </div>
+<div ng-if="ctrl.loading" class="text-center">
+    <span class="fa fa-4x fa-spinner fa-spin"></span>
 </div>
-<div class="row">
-    <div class="columns large-10">
-        <div class="row">
-            <div class="columns small-3">
-                Code Type
-            </div>
-            <div class="columns small-1 requiredFieldIndicator">
-                <span class="fa fa-asterisk"></span>
-            </div>
-            <div class="columns large-5 small-8 end">
-                <select name="dropDownType" id="dropDownType" ng-model="ctrl.code.codeType" ng-options="type.value as type.key for type in ctrl.codeTypes">
-                </select>
-            </div>
-        </div>
-    </div>
+<div class="text-center" ng-if="ctrl.codeDoesNotExist">
+    <h1>This code does not exist</h1>
 </div>
-<div class="row">
-    <div class="columns large-10">
-        <div class="row">
-            <div class="columns small-3">
-                Code
-            </div>
-            <div class="columns small-1 requiredFieldIndicator">
-                <span class="fa fa-asterisk"></span>
-            </div>
-            <div class="columns large-5 small-8 end">
-                <input type="text" ng-model="ctrl.code.code">
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="columns large-10">
-        <div class="row">
-            <div class="columns small-3">
-                Description
-            </div>
-            <div class="columns small-offset-1 large-5 small-8 end">
-                <textarea id="textboxDescription" cols="30" rows="5" ng-model="ctrl.code.description"></textarea>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="columns large-10">
-        <div class="row">
-            <div class="columns small-3">
-                Limit
-            </div>
-            <div class="columns small-offset-1 large-5 small-8 end">
-                <input type="text" ng-model="ctrl.code.limit">
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="columns large-10">
-        <div class="row">
-            <div class="columns small-3">
-                Begin Date
-            </div>
-            <div class="columns small-1 requiredFieldIndicator">
-                <span class="fa fa-asterisk"></span>
-            </div>
-            <div class="columns large-5 small-8 end">
-                <div class="row collapse">
-                    <div class="columns small-10">
-                        <input type="text" id="inputBeginDate" date-picker ng-model="ctrl.code.beginDate">
-                    </div>
-                    <div class="columns small-2">
-                        <a href="#" class="button postfix " date-picker-open="inputBeginDate">
-                            <span class="fa fa-calendar"></span>
-                        </a>
+<div ng-hide="ctrl.loading || ctrl.codeDoesNotExist">
+    <div class="row">
+        <div class="columns large-10">
+            <div class="row">
+                <div class="columns small-3">Is Active</div>
+                <div class="columns small-offset-1 large-5 small-8 end">
+                    <div class="switch">
+                        <input type="checkbox" id="cbIsActive" ng-model="ctrl.code.isActive">
+                        <label for="cbIsActive"></label>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="columns large-10">
-        <div class="row">
-            <div class="columns small-offset-4 large-5 small-8 end">
-                <div class="row collapse">
-                    <div class="columns small-10">
-                        <input type="text" id="inputBeginTime" time-picker ng-model="ctrl.code.beginTime">
-                    </div>
-                    <div class="columns small-2">
-                        <a href="#" class="button postfix" time-picker-open="inputBeginTime">
-                            <span class="fa fa-clock-o"></span>
-                        </a>
+    <div class="row">
+        <div class="columns large-10">
+            <div class="row">
+                <div class="columns small-3">
+                    Code Type
+                </div>
+                <div class="columns small-1 requiredFieldIndicator">
+                    <span class="fa fa-asterisk"></span>
+                </div>
+                <div class="columns large-5 small-8 end">
+                    <select name="dropDownType" id="dropDownType" ng-model="ctrl.code.codeType" ng-options="type.value as type.key for type in ctrl.codeTypes">
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="columns large-10">
+            <div class="row">
+                <div class="columns small-3">
+                    Code
+                </div>
+                <div class="columns small-1 requiredFieldIndicator">
+                    <span class="fa fa-asterisk"></span>
+                </div>
+                <div class="columns large-5 small-8 end">
+                    <input type="text" ng-model="ctrl.code.code">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="columns large-10">
+            <div class="row">
+                <div class="columns small-3">
+                    Description
+                </div>
+                <div class="columns small-offset-1 large-5 small-8 end">
+                    <textarea id="textboxDescription" cols="30" rows="5" ng-model="ctrl.code.description"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="columns large-10">
+            <div class="row">
+                <div class="columns small-3">
+                    Limit
+                </div>
+                <div class="columns small-offset-1 large-5 small-8 end">
+                    <input type="text" ng-model="ctrl.code.limit">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="columns large-10">
+            <div class="row">
+                <div class="columns small-3">
+                    Begin Date
+                </div>
+                <div class="columns small-1 requiredFieldIndicator">
+                    <span class="fa fa-asterisk"></span>
+                </div>
+                <div class="columns large-5 small-8 end">
+                    <div class="row collapse">
+                        <div class="columns small-10">
+                            <input type="text" id="inputBeginDate" date-picker ng-model="ctrl.code.beginDate">
+                        </div>
+                        <div class="columns small-2">
+                            <a href="#" class="button postfix " date-picker-open="inputBeginDate">
+                                <span class="fa fa-calendar"></span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="columns large-10">
-        <div class="row">
-            <div class="columns small-3">
-                End Date
-            </div>
-            <div class="columns small-1 requiredFieldIndicator">
-                <span class="fa fa-asterisk"></span>
-            </div>
-            <div class="columns large-5 small-8 end">
-                <div class="row collapse">
-                    <div class="columns small-10">
-                        <input type="text" id="inputEndDate" date-picker ng-model="ctrl.code.endDate">
-                    </div>
-                    <div class="columns small-2">
-                        <a href="#" class="button postfix" date-picker-open="inputEndDate">
-                            <span class="fa fa-calendar"></span>
-                        </a>
+    <div class="row">
+        <div class="columns large-10">
+            <div class="row">
+                <div class="columns small-offset-4 large-5 small-8 end">
+                    <div class="row collapse">
+                        <div class="columns small-10">
+                            <input type="text" id="inputBeginTime" time-picker ng-model="ctrl.code.beginTime">
+                        </div>
+                        <div class="columns small-2">
+                            <a href="#" class="button postfix" time-picker-open="inputBeginTime">
+                                <span class="fa fa-clock-o"></span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="columns large-10">
-        <div class="row">
-            <div class="columns small-offset-4 large-5 small-8 end">
-                <div class="row collapse">
-                    <div class="columns small-10">
-                        <input type="text" id="inputEndTime" time-picker ng-model="ctrl.code.endTime">
-                    </div>
-                    <div class="columns small-2">
-                        <a href="#" class="button postfix" time-picker-open="inputEndTime">
-                            <span class="fa fa-clock-o"></span>
-                        </a>
+    <div class="row">
+        <div class="columns large-10">
+            <div class="row">
+                <div class="columns small-3">
+                    End Date
+                </div>
+                <div class="columns small-1 requiredFieldIndicator">
+                    <span class="fa fa-asterisk"></span>
+                </div>
+                <div class="columns large-5 small-8 end">
+                    <div class="row collapse">
+                        <div class="columns small-10">
+                            <input type="text" id="inputEndDate" date-picker ng-model="ctrl.code.endDate">
+                        </div>
+                        <div class="columns small-2">
+                            <a href="#" class="button postfix" date-picker-open="inputEndDate">
+                                <span class="fa fa-calendar"></span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row" ng-show="ctrl.code.codeType == 'DISCOUNT'">
-    <div class="columns">
-        <div class="row">
-            <div class="columns">
-                <div class="row">
-                    <div class="columns large-8">
-                        <h2>Code Qualifiers</h2>
+    <div class="row">
+        <div class="columns large-10">
+            <div class="row">
+                <div class="columns small-offset-4 large-5 small-8 end">
+                    <div class="row collapse">
+                        <div class="columns small-10">
+                            <input type="text" id="inputEndTime" time-picker ng-model="ctrl.code.endTime">
+                        </div>
+                        <div class="columns small-2">
+                            <a href="#" class="button postfix" time-picker-open="inputEndTime">
+                                <span class="fa fa-clock-o"></span>
+                            </a>
+                        </div>
                     </div>
-                    <div class="columns large-4">
-                        <input type="button" class="button expand" value="Edit Code Qualifiers" ng-click="ctrl.openQualifierModal()">
-                    </div>
-                </div>
-                <div class="row" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'" ng-repeat="(type, qualifiers) in ctrl.qualifiers">
-                    <strong>{{type}}:</strong>
-                    <span ng-repeat="qualifier in qualifiers">{{qualifier.qualCode}}
-                        <span ng-if="$index < qualifiers.length-1">,</span>
-                    </span>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<br>
-<div class="row" ng-show="ctrl.code.codeType == 'DISCOUNT'">
-    <div class="columns">
-        <div class="row">
-            <div class="columns">
-                <div class="row">
-                    <div class="columns large-8">
-                        <h2>Discounts</h2>
+    <div class="row" ng-show="ctrl.code.codeType == 'DISCOUNT'">
+        <div class="columns">
+            <div class="row">
+                <div class="columns">
+                    <div class="row">
+                        <div class="columns large-8">
+                            <h2>Code Qualifiers</h2>
+                        </div>
+                        <div class="columns large-4">
+                            <input type="button" class="button expand" value="Edit Code Qualifiers" ng-click="ctrl.openQualifierModal()">
+                        </div>
                     </div>
-                    <div class="columns large-4">
-                        <input type="button" class="button expand" value="Add New Discount">
+                    <div class="row" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'" ng-repeat="(type, qualifiers) in ctrl.qualifiers">
+                        <strong>{{type}}:</strong>
+                        <span ng-repeat="qualifier in qualifiers">{{qualifier.qualCode}}
+                            <span ng-if="$index < qualifiers.length-1">,</span>
+                        </span>
                     </div>
                 </div>
-                <div class="row" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'" ng-repeat="discount in ctrl.discounts" exl-discount="discount"></div>
             </div>
         </div>
     </div>
-</div>
-<br>
-<div class="row">
-    <div class="columns large-4 large-offset-2">
-        <a href="/" class="button expand secondary">Back</a>
+    <br>
+    <div class="row" ng-show="ctrl.code.codeType == 'DISCOUNT'">
+        <div class="columns">
+            <div class="row">
+                <div class="columns">
+                    <div class="row">
+                        <div class="columns large-8">
+                            <h2>Discounts</h2>
+                        </div>
+                        <div class="columns large-4">
+                            <input type="button" class="button expand" value="Add New Discount">
+                        </div>
+                    </div>
+                    <div class="row" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'" ng-repeat="(index,discount) in ctrl.discounts" exl-discount="discount" >{{discount}}</div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="columns large-4 end">
-        <input type="button" class="button expand success" ng-click="ctrl.save()" value="Save">
+    <br>
+    <div class="row">
+        <div class="columns large-4 large-offset-2">
+            <a href="/" class="button expand secondary">Back</a>
+        </div>
+        <div class="columns large-4 end">
+            <input type="button" class="button expand success" ng-click="ctrl.save()" value="Save">
+        </div>
     </div>
-</div>
-<div id="qualifierEditModal" class="reveal-modal" data-reveal>
-    <h2>Edit Code Qualifiers</h2>
-    <div qualifier-edit="ctrl.code.id"></div>
-    <a class="close-reveal-modal">&#215;</a>
+    <div id="qualifierEditModal" class="reveal-modal" data-reveal>
+        <h2>Edit Code Qualifiers</h2>
+        <div qualifier-edit="ctrl.code.id"></div>
+        <a class="close-reveal-modal">&#215;</a>
+    </div>
 </div>

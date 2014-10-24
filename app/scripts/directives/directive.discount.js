@@ -24,8 +24,6 @@ function discount(discountFactory, qualifierFactory) {
     return directive;
 
     function link(scope, element, attrs) {
-        scope.discount.displayStartDate = formatDate(scope.discount.startDate);
-        scope.discount.displayEndDate = formatDate(scope.discount.endDate);
         scope.discount.displayAmount = formatDiscountAmount(scope.discount);
         scope.discount.displayType = discountFactory.getDiscountType(scope.discount.type);
         scope.discount.qualifiers = qualifierFactory.getQualifiersForDiscount(scope.discount.id);

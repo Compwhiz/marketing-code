@@ -34,3 +34,5 @@ angular
         redirectTo: '/'
       });
   });
+
+  var rootRef = new Firebase('https://scorching-inferno-7654.firebaseio.com/');

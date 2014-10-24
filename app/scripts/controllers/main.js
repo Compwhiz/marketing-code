@@ -15,5 +15,7 @@ MainCtrl.$inject = ['marketingCodeFactory'];
 function MainCtrl(marketingCodeFactory) {
     var vm = this;
 
-    vm.codes = marketingCodeFactory.getAllCodes();
+    marketingCodeFactory.getAllCodes().then(function(data){
+    	vm.codes = data;
+    });
 }

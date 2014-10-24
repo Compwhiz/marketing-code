@@ -10,58 +10,38 @@
 angular.module('marketingCodeApp')
     .factory('discountFactory', discountFactory);
 
-discountFactory.$inject = ['$http'];
+discountFactory.$inject = ['$http','$q'];
 
-function discountFactory($http) {
+function discountFactory($http,$q) {
 
-    var discountTypes = [{
-        key: '-- Please Select --',
-        value: ''
-    }, {
-        key: 'Percent Off',
-        value: 'PERCENT'
-    }, {
-        key: 'Amount Off',
-        value: 'FLATOFF'
-    }, {
-        key: 'Set Fee',
-        value: 'SETFEE'
-    }];
+    var discountRef = rootRef.child('discounts');
 
     return {
-        discountTypes: discountTypes,
+        getDiscountTypes: getDiscountTypes,
         getDiscountsForCode: getDiscountsForCode,
         getDiscountType: getDiscountType
     };
 
-    function getDiscountsForCode(code) {
-        // EventXL data access call to get discounts
+    function getDiscountTypes() {
+        var defer = $q.defer();
+        rootRef.child('discountType').once('value', function(snapshot) {
+            defer.resolve(snapshot.val());
+        });
+        return defer.promise;
+    }
 
-        // return mock data for now
-        return [{
-            id: 1001,
-            type: 'PERCENT',
-            amount: 50,
-            target: 'REG', // 'BISTRO', 'FUNRUN'],
-            startDate: new Date(2014, 9, 1, 9),
-            endDate: new Date(2014, 9, 30, 4)
-        }, {
-            id: 1002,
-            type: 'FLATOFF',
-            amount: 75,
-            target: 'CENT', //, 'ATT', 'VIRT'],
-            startDate: new Date(2014, 9, 15, 10),
-            endDate: new Date(2014, 10, 15, 5)
-        }];
+    function getDiscountsForCode(codeID) {
+        // EventXL data access call to get discounts
+        var defer = $q.defer();
+
+        discountRef.once('value', function(snapshot){
+            var discounts = _.toArray(snapshot.val());
+            defer.resolve(_.where(discounts, {codeID:codeID}));
+        });
+        return defer.promise;
     }
 
     function getDiscountType(value) {
-        var item = _.findWhere(discountTypes, {
-            value: value
-        });
-
-        if (item)
-            return item.key;
         return value;
     }
 }

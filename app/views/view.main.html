@@ -27,9 +27,9 @@
         Description
     </div>
 </div>
-<div class="row" ng-repeat="code in main.codes" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'">
+<div class="row" ng-repeat="(id,code) in main.codes" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'">
     <div class="columns small-2">
-        <a href="/#/marketingCode/{{code.id}}" class="button small expand">Select</a>
+        <a href="/#/marketingCode/{{id}}" class="button small expand">Select</a>
     </div>
     <div class="columns small-2">{{code.code}}</div>
     <div class="columns small-3">{{code.codeType}}</div>

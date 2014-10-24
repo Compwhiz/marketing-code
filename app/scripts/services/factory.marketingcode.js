@@ -10,93 +10,59 @@
 angular.module('marketingCodeApp')
     .factory('marketingCodeFactory', marketingCodeFactory);
 
-marketingCodeFactory.$inject = ['$http'];
+marketingCodeFactory.$inject = ['$http', '$q'];
 
-function marketingCodeFactory($http) {
+function marketingCodeFactory($http, $q) {
 
-    var codes = [{
-        id: 1001,
-        code: 'TEST1',
-        description: 'Description for code 1',
-        codeType: 'DISCOUNT',
-        beginDate: new Date(),
-        endDate: new Date(),
-        isActive: true
-    }, {
-        id: 1002,
-        code: 'TEST2',
-        description: '',
-        codeType: 'DISCOUNT',
-        beginDate: new Date(),
-        endDate: new Date(),
-        isActive: true
-    }];
+    var codesRef = rootRef.child('codes');
 
     return {
         getAllCodes: getAllCodes,
         getMarketingCode: getMarketingCode,
         saveMarketingCode: saveMarketingCode,
-        nextCodeID: nextCodeID,
-        codeTypes: [{
-            key: '-- Please Select One --',
-            value: ''
-        }, {
-            key: 'Access',
-            value: 'ACCESS'
-        }, { 
-            key: 'Discount',
-            value: 'DISCOUNT'
-        }, {
-            key: 'Tracking',
-            value: 'TRACKING'
-        }]
+        getCodeTypes: getCodeTypes
     };
 
-    function getMarketingCode(id) {
-        if (!Number.isInteger(id))
-            id = Number.parseInt(id);
+    function getCodeTypes() {
+        var defer = $q.defer();
 
-        if (!Number.isInteger(id))
-            return undefined;
-
-        return _.findWhere(codes, {
-            id: id
+        rootRef.child('codeTypes').once('value', function(snapshot) {
+            defer.resolve(snapshot.val());
         });
+
+        return defer.promise;
     }
 
-    function saveMarketingCode(code) {
-        // EventXL data access call to save code
+    function getMarketingCode(id) {
+        var defer = $q.defer();
 
-        // save logic for now
-        if (typeof code === "undefined" || typeof code.id === "undefined")
-            return;
-
-        var index = -1;
-        codes.forEach(function(item, idx) {
-            if (item.id == code.id) {
-                index = idx;
-                return;
-            }
+        codesRef.child(id).once('value', function(snapshot) {
+            defer.resolve(snapshot.val());
         });
 
-        if (index >= 0)
-            codes[index] = angular.copy(code);
+        return defer.promise;
+    }
+
+    function saveMarketingCode(code, id) {
+        // EventXL data access call to save code
+        if (typeof code === "undefined")
+            return;
+
+        if (id && id != null && id != '')
+            codesRef.child(id).update(code);
         else
-            codes.push(code);
+            codesRef.push(code);
     }
 
     function getAllCodes() {
         // EventXL data access call to get all codes
+        var deffered = $q.defer();
 
-        // return mock data for now
-        return codes
-    }
-
-    function nextCodeID() {
-        var max = _.max(codes, function(code) {
-            return code.id;
+        codesRef.once('value', function(snapshot) {
+            deffered.resolve(snapshot.val());
         });
 
-        return max.id + 1;
+        // return mock data for now
+        return deffered.promise;
     }
 }

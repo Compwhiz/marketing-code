@@ -32,36 +32,27 @@ function qualifierEdit() {
     function QualifierEditCtrl($scope, qualifierFactory, businessClassFactory) {
         var vm = this;
 
-        vm.possibleQualifiers = {};
-        vm.toggleSelected = toggleSelected;
+        vm.statuses = {};
+        vm.memberTypes = [];
+        vm.regTypes = [];
+        vm.dateStatuses = [];
         vm.qualifiers = {};
         vm.groupedQualifiers = [];
+
         vm.saveAndClose = saveAndClose;
         vm.close = close;
+        vm.toggleSelected = toggleSelected;
 
-        businessClassFactory.getAllStatuses().then(function(data) {
-            vm.possibleQualifiers = data;
-        });
-
-        qualifierFactory.getQualifiersForCode($scope.codeID).then(function(data) {
-            vm.qualifiers = data;
-            vm.groupedQualifiers = _.groupBy(data, 'qualType');
-
-            _.forEach(vm.groupedQualifiers, function(qualifiers, type) {
-                var codes = _.pluck(qualifiers, 'qualCode');
-                _.forEach(vm.possibleQualifiers[type], function(status, index) {
-                    status.selected = _.contains(codes, status.statusCode);
-                });
-            });
-        });
+        getAllStatuses();
+getQualifiersForCode();
 
         function toggleSelected(qualifier) {
             qualifier.selected = !qualifier.selected;
         }
 
         function saveAndClose() {
-            _.forEach(vm.possibleQualifiers, function(qualifiers, type) {
-                _.forEach(vm.possibleQualifiers[type], function(qualifier, index) {
+            _.forEach(vm.statuses, function(qualifiers, type) {
+                _.forEach(vm.statuses[type], function(qualifier, index) {
                     var q = getQualifier(type, qualifier.statusCode);
                     if (typeof(q) != 'undefined') {
                         q.deleted = !qualifier.selected;
@@ -73,7 +64,7 @@ function qualifierEdit() {
                     }
                 });
             });
-
+            qualifierFactory.saveCodeQualifiers($scope.codeID,vm.qualifiers);
             vm.close();
         }
 
@@ -88,5 +79,29 @@ function qualifierEdit() {
                 qualType: type
             });
         }
+
+        function getAllStatuses(){
+            businessClassFactory.getAllStatuses().then(function(data) {
+            vm.statuses = data;
+            vm.memberTypes = data.MEMBER;
+            vm.regTypes = data.REGTYPE;
+            vm.dateStatuses = data.DATE;
+        });
+        }
+
+
+function getQualifiersForCode(){
+        qualifierFactory.getQualifiersForCode($scope.codeID).then(function(data) {
+            vm.qualifiers = data;
+            vm.groupedQualifiers = _.groupBy(data, 'qualType');
+
+            _.forEach(vm.groupedQualifiers, function(qualifiers, type) {
+                var codes = _.pluck(qualifiers, 'qualCode');
+                _.forEach(vm.statuses[type], function(status, index) {
+                    status.selected = _.contains(codes, status.statusCode);
+                });
+            });
+        });
+    }
     }
 }

@@ -163,13 +163,18 @@
                 <div class="columns">
                     <div class="row">
                         <div class="columns large-8">
-                            <h2>Code Qualifiers</h2>
+                            <h2>Who Can Use this Code?</h2>
                         </div>
                         <div class="columns large-4">
                             <input type="button" class="button expand" value="Edit Code Qualifiers" ng-click="ctrl.openQualifierModal()">
                         </div>
                     </div>
-                    <div class="row" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'" ng-repeat="(type, qualifiers) in ctrl.qualifiers">
+                    <div ng-show="ctrl.loadingCodeQualifiers" class="row">
+                <div class="columns">
+                    <span class="fa fa-spinner fa-4x fa-spin"></span>
+                </div>
+            </div>
+                    <div ng-hide="ctrl.loadingCodeQualifiers" class="row" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'" ng-repeat="(type, qualifiers) in ctrl.qualifiers">
                         <strong>{{type}}:</strong>
                         <span ng-repeat="qualifier in qualifiers">{{qualifier.qualCode}}
                             <span ng-if="$index < qualifiers.length-1">,</span>

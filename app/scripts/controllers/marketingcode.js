@@ -48,11 +48,14 @@ function MarketingCodeCtrl($scope, $routeParams, $location, marketingCodeFactory
         });
     }
     vm.qualifiers = [];
-    qualifierFactory.getQualifiersForCode(vm.id).then(function(data) {
-        vm.qualifiers = _.groupBy(data,'qualType');
-    });
+    getCodeQualifiers();
+
     vm.save = saveCode;
     vm.openQualifierModal = openQualifierModal;
+
+    $scope.$on('qualifierEditClosed',function(){
+        getCodeQualifiers();
+    });
 
     function saveCode() {
         marketingCodeFactory.saveMarketingCode(vm.code, vm.id);
@@ -64,5 +67,15 @@ function MarketingCodeCtrl($scope, $routeParams, $location, marketingCodeFactory
             close_on_esc:false,
             close_on_background_click:false
         });
+    }
+
+    function getCodeQualifiers(){
+        vm.loadingCodeQualifiers = true;
+        qualifierFactory.getQualifiersForCode(vm.id).then(function(data) {
+        vm.qualifiers = _.groupBy(data,'qualType');
+        vm.loadingCodeQualifiers = false;
+    }, function(){
+        vm.loadingCodeQualifiers = true;
+    });
     }
 }

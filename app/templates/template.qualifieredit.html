@@ -1,32 +1,49 @@
 <div class="row">
 	<div class="columns">
 		<div class="row">
-			<div class="columns small-8">
+			<div class="columns">
 				<h4>Member Types</h4>
 			</div>
 		<div class="row">
 			<div class="columns">
 				<ul class="small-block-grid-3">
-					<li ng-repeat="type in ctrl.possibleQualifiers.MEMBER">
-						<div class="qualifierOption" ng-click="ctrl.toggleSelected(type)" ng-class="type.selected ? 'qualSelected' : ''" >{{type.statusCode}} - {{type.description}}</div>
+					<li ng-repeat="type in ctrl.statuses.MEMBER">
+						<div class="qualifierOption" ng-click="ctrl.toggleSelected(type)" ng-class="type.selected ? 'qualSelected' : ''" >{{type.statusCode}}: {{type.description}}</div>
 					</li>
 				</ul>
 			</div>
 		</div>
 		<div class="row">
-			<div class="columns small-8">
+			<div class="columns">
 				<h4>Registration Types</h4>
 			</div>
 		</div>
 		<div class="row">
 			<div class="columns">
 				<ul class="small-block-grid-3">
-					<li ng-repeat="type in ctrl.possibleQualifiers.REGTYPE">
-						<div class="qualifierOption" ng-click="ctrl.toggleSelected(type)" ng-class="type.selected ? 'qualSelected' : ''" >{{type.statusCode}} - {{type.description}}</div>
+					<li  ng-repeat="type in ctrl.statuses.REGTYPE">
+						<div  class="qualifierOption" ng-class="type.selected ? 'qualSelected' : ''" ng-click="ctrl.toggleSelected(type)">{{type.statusCode}}: {{type.description}}</div>
 					</li>
 				</ul>
 			</div>
 		</div>
+		<div class="row">
+			<div class="columns">
+				<h4>Date Statuses</h4>
+			</div>
+		</div>
+		<div class="row">
+			<div class="columns">
+				<ul class="small-block-grid-3">
+					<li ng-repeat="type in ctrl.statuses.DATE">
+						<div class="qualifierOption" ng-class="type.selected ? 'qualSelected' : ''" ng-click="ctrl.toggleSelected(type)">
+							{{type.statusCode}}: {{type.description}}
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<br>
 		<div class="row">
 			<div class="columns medium-6 large-6">
 				<a ng-click="ctrl.close()" class="button expand secondary">Cancel</a>

@@ -20,7 +20,8 @@ function qualifierFactory($http, $q) {
 
     return {
         getQualifiersForDiscount: getQualifiersForDiscount,
-        getQualifiersForCode: getQualifiersForCode
+        getQualifiersForCode: getQualifiersForCode,
+        saveCodeQualifiers:saveCodeQualifiers
     };
 
     function getQualifiersForDiscount(discountID) {
@@ -62,11 +63,26 @@ function qualifierFactory($http, $q) {
                 });
 
                 defer2.resolve(_.filter(data, function(item) {
-                    return _.contains(ids, item.id);
+                    return !item.deleted && _.contains(ids, item.id);
                 }));
             })
         });
 
         return defer2.promise;
+    }
+
+    function saveCodeQualifiers(codeID, qualifiers){
+        if(typeof(codeID) == 'undefined')
+            return;
+
+        _.forEach(qualifiers, function(qualifier){
+            // new qualifier
+            if(typeof(qualifier.id) == 'undefined'){
+                qualifier.id = qualifierRef.push(qualifier).name();
+                codeQualRef.push({codeID:codeID,qualifierID:qualifier.id});
+            }else{
+                qualifierRef.child(qualifier.id).update(qualifier);
+            }
+        });
     }
 };

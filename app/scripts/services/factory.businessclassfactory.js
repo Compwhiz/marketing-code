@@ -52,4 +52,17 @@ function businessClassFactory($q) {
             statusCode: statusCode
         });
     }
+
+    function selectStatus(type,statusCode){
+        switch(type){
+            case 'REGTYPE':
+            break;
+            case 'MEMBER':
+            break;
+            case 'DATE':
+            break;
+            default:
+            break;
+        }
+    }
 }

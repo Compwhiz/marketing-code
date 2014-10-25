@@ -166,7 +166,7 @@
                             <h2>Who Can Use this Code?</h2>
                         </div>
                         <div class="columns large-4">
-                            <input type="button" class="button expand" value="Edit Code Qualifiers" ng-click="ctrl.openQualifierModal()">
+                            <input type="button" class="button expand" value="Edit Who Can Use this Code" ng-click="ctrl.openQualifierModal()">
                         </div>
                     </div>
                     <div ng-show="ctrl.loadingCodeQualifiers" class="row">
@@ -175,10 +175,15 @@
                 </div>
             </div>
                     <div ng-hide="ctrl.loadingCodeQualifiers" class="row" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'" ng-repeat="(type, qualifiers) in ctrl.qualifiers">
-                        <strong>{{type}}:</strong>
-                        <span ng-repeat="qualifier in qualifiers">{{qualifier.qualCode}}
-                            <span ng-if="$index < qualifiers.length-1">,</span>
-                        </span>
+                        <div class="columns small-2">
+                            <strong>{{type}}:</strong>
+                        </div>
+                        <div class="columns small-10">
+                            <ul class="small-block-grid-2 large-block-grid-4">
+                            <li ng-repeat="qualifier in qualifiers">{{qualifier.qualCode}}: {{qualifier.description}}
+                            </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -206,7 +211,7 @@
         </div>
     </div>
     <div id="qualifierEditModal" class="reveal-modal" data-reveal>
-        <h2>Edit Code Qualifiers</h2>
+        <h2>Who Can Use this Code?</h2>
         <div qualifier-edit="ctrl.id"></div>
     </div>
 </div>

@@ -10,9 +10,9 @@
 angular.module('marketingCodeApp')
     .factory('qualifierFactory', qualifierFactory);
 
-qualifierFactory.$inject = ['$http', '$q'];
+qualifierFactory.$inject = ['$http', '$q','businessClassFactory'];
 
-function qualifierFactory($http, $q) {
+function qualifierFactory($http, $q, businessClassFactory) {
 
     var qualifierRef = rootRef.child('qualifiers');
     var codeQualRef = rootRef.child('codeQualifiers');
@@ -32,9 +32,12 @@ function qualifierFactory($http, $q) {
                 item['id'] = idx;
             });
             var discountQuals = _.toArray(data);
-            defer.resolve(_.where(discountQuals, {
+            discountQuals = _.where(discountQuals, {
                 discountID: discountID
-            }));
+            });
+            _.forEach(discountQuals,function(qual){
+                qual.description = businessClassFactory.
+            })
         });
 
         return defer.promise;

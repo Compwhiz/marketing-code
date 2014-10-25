@@ -10,44 +10,16 @@
 angular.module('marketingCodeApp')
     .factory('businessClassFactory', businessClassFactory);
 
-businessClassFactory.$inject = [];
+businessClassFactory.$inject = ['$q'];
 
-function businessClassFactory() {
+function businessClassFactory($q) {
 
-    var statuses = {
-        regTypes: [{
-            statusCode: '14',
-            description: 'Nurse'
-        }, {
-            statusCode: '15',
-            description: 'Doctor'
-        }, {
-            statusCode: '16',
-            description: 'Student'
-        }, {
-            statusCode: '17',
-            description: 'Faculty'
-        }, {
-            statusCode: '18',
-            description: 'Staff'
-        }, {
-            statusCode: '20',
-            description: 'Press'
-        }, {
-            statusCode: 'VIP',
-            description: 'VIP Registrant'
-        }, {
-            statusCode: 'ECO',
-            description: 'Exhibitor Contact'
-        }],
-        memberTypes: [{
-            statusCode: 'M',
-            description: 'Member'
-        }, {
-            statusCode: 'N',
-            description: 'Non-Member'
-        }]
-    };
+    var statusRef = rootRef.child('statuses');
+    var statuses;
+
+    statusRef.once('value', function(snapshot) {
+        statuses = _.groupBy(snapshot.val(), 'type');
+    });
 
     // Public API here
     return {
@@ -56,14 +28,21 @@ function businessClassFactory() {
         selectMemberStatus: selectMemberStatus
     };
 
-    function getAllStatuses(type) {
-        if (typeof(type) != 'undefined' && type != null)
-            return statuses[type]
-        return statuses;
+    function getAllStatuses() {
+        var defer = $q.defer();
+        if (!statuses) {
+            statusRef.once('value', function(snapshot) {
+                defer.resolve(_.groupBy(snapshot.val(), 'type'));
+            });
+        } else {
+            defer.resolve(statuses);
+        }
+
+        return defer.promise;
     }
 
     function selectRegStatus(statusCode) {
-        return _.findWhere(statuses.regTypes, {
+        return _.findWhere(statuses.REGTYPE, {
             statusCode: statusCode
         });
     }

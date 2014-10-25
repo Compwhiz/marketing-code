@@ -184,15 +184,9 @@
         <div class="columns">
             <div class="row">
                 <div class="columns">
-                    <div class="row">
-                        <div class="columns large-8">
-                            <h2>Discounts</h2>
-                        </div>
-                        <div class="columns large-4">
-                            <input type="button" class="button expand" value="Add New Discount">
-                        </div>
+                    <div class="row" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'" ng-repeat="discount in ctrl.discounts">
+                        <div discount-group="discount"></div>{{id}}
                     </div>
-                    <div class="row" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'" ng-repeat="(index,discount) in ctrl.discounts" exl-discount="discount" >{{discount}}</div>
                 </div>
             </div>
         </div>
@@ -208,7 +202,6 @@
     </div>
     <div id="qualifierEditModal" class="reveal-modal" data-reveal>
         <h2>Edit Code Qualifiers</h2>
-        <div qualifier-edit="ctrl.code.id"></div>
-        <a class="close-reveal-modal">&#215;</a>
+        <div qualifier-edit="ctrl.id"></div>
     </div>
 </div>

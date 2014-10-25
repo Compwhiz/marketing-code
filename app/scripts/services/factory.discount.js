@@ -10,21 +10,24 @@
 angular.module('marketingCodeApp')
     .factory('discountFactory', discountFactory);
 
-discountFactory.$inject = ['$http','$q'];
+discountFactory.$inject = ['$http', '$q'];
 
-function discountFactory($http,$q) {
+function discountFactory($http, $q) {
 
     var discountRef = rootRef.child('discounts');
+    var discountTargetRef = rootRef.child('discountTargets');
+    var discountTypeRef = rootRef.child('discountType');
 
     return {
         getDiscountTypes: getDiscountTypes,
         getDiscountsForCode: getDiscountsForCode,
-        getDiscountType: getDiscountType
+        getDiscountType: getDiscountType,
+        getTargetsForDiscount: getTargetsForDiscount,
     };
 
     function getDiscountTypes() {
         var defer = $q.defer();
-        rootRef.child('discountType').once('value', function(snapshot) {
+        discountTypeRef.once('value', function(snapshot) {
             defer.resolve(snapshot.val());
         });
         return defer.promise;
@@ -34,14 +37,35 @@ function discountFactory($http,$q) {
         // EventXL data access call to get discounts
         var defer = $q.defer();
 
-        discountRef.once('value', function(snapshot){
-            var discounts = _.toArray(snapshot.val());
-            defer.resolve(_.where(discounts, {codeID:codeID}));
+        discountRef.once('value', function(snapshot) {
+            var data = snapshot.val();
+            _.forEach(data, function(item, idx) {
+                item['id'] = idx;
+            });
+            var discounts = _.toArray(data);
+            defer.resolve(_.where(discounts, {
+                codeID: codeID
+            }));
         });
         return defer.promise;
     }
 
     function getDiscountType(value) {
         return value;
+    }
+
+    function getTargetsForDiscount(discountID) {
+        var defer = $q.defer();
+        discountTargetRef.once('value', function(snapshot) {
+            var data = snapshot.val();
+            _.forEach(data, function(item, idx) {
+                item['id'] = idx;
+            });
+            var targets = _.toArray(data);
+            defer.resolve(_.where(targets, {
+                discountID: discountID
+            }));
+        });
+        return defer.promise;
     }
 }

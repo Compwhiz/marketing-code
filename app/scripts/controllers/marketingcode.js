@@ -28,10 +28,6 @@ function MarketingCodeCtrl($scope, $routeParams, $location, marketingCodeFactory
                 vm.code = angular.copy(vm.masterCode);
             else
                 vm.codeDoesNotExist = true;
-            // if (typeof vm.code !== undefined) {
-            //     vm.discounts = discountFactory.getDiscountsForCode(vm.code.id);
-            //     vm.qualifiers = qualifierFactory.getQualifiersForCode(vm.code.id);
-            // }
 
             vm.loading = false;
         });
@@ -42,17 +38,19 @@ function MarketingCodeCtrl($scope, $routeParams, $location, marketingCodeFactory
         vm.loading = false;
     }
 
-
     marketingCodeFactory.getCodeTypes().then(function(data) {
         vm.codeTypes = data;
     });
     vm.discounts = [];
     if (hasID) {
         discountFactory.getDiscountsForCode(vm.id).then(function(data) {
-            vm.discounts = _.groupBy(data,'displayGroup');
+            vm.discounts = _.groupBy(data, 'displayGroup');
         });
     }
     vm.qualifiers = [];
+    qualifierFactory.getQualifiersForCode(vm.id).then(function(data) {
+        vm.qualifiers = _.groupBy(data,'qualType');
+    });
     vm.save = saveCode;
     vm.openQualifierModal = openQualifierModal;
 
@@ -62,6 +60,9 @@ function MarketingCodeCtrl($scope, $routeParams, $location, marketingCodeFactory
     }
 
     function openQualifierModal() {
-        $('div#qualifierEditModal').foundation('reveal', 'open');
+        $('div#qualifierEditModal').foundation('reveal', 'open', {
+            close_on_esc:false,
+            close_on_background_click:false
+        });
     }
 }

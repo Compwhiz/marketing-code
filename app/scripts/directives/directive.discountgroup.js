@@ -7,12 +7,23 @@
  * # discountGroup
  */
 angular.module('marketingCodeApp')
-  .directive('discountGroup', function () {
+    .directive('discountGroup',
+        discountGroup);
+
+discountGroup.$inject = [];
+
+function discountGroup() {
+
     return {
-      template: '<div></div>',
-      restrict: 'E',
-      link: function postLink(scope, element, attrs) {
-        element.text('this is the discountGroup directive');
-      }
+        templateUrl: '../templates/template.discountgroup.html',
+        restrict: 'EA',
+        link: link,
+        scope: {
+            discounts: '=discountGroup',
+        },
     };
-  });
+
+    function link(scope, element, attrs) {
+        
+    }
+}

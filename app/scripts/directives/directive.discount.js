@@ -15,9 +15,10 @@ function discount(discountFactory, qualifierFactory) {
     var directive = {
         link: link,
         restrict: 'A',
+        //require: '^discountGroup',
         templateUrl: '../templates/template.discount.html',
         scope: {
-            discount: '=exlDiscount',
+            discount: '=exlDiscount'
         },
     };
 
@@ -27,6 +28,10 @@ function discount(discountFactory, qualifierFactory) {
         scope.discount.displayAmount = formatDiscountAmount(scope.discount);
         scope.discount.displayType = discountFactory.getDiscountType(scope.discount.type);
         scope.discount.qualifiers = qualifierFactory.getQualifiersForDiscount(scope.discount.id);
+
+        discountFactory.getTargetsForDiscount(scope.discount.id).then(function(data){
+            scope.targets = data;
+        });
     }
 
     function formatDate(date) {

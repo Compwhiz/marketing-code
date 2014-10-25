@@ -59,7 +59,11 @@ function marketingCodeFactory($http, $q) {
         var deffered = $q.defer();
 
         codesRef.once('value', function(snapshot) {
-            deffered.resolve(snapshot.val());
+            var data = snapshot.val();
+            _.forEach(data, function(item, idx) {
+                item['id'] = idx;
+            });
+            deffered.resolve(data);
         });
 
         // return mock data for now

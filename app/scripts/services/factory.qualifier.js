@@ -10,53 +10,13 @@
 angular.module('marketingCodeApp')
     .factory('qualifierFactory', qualifierFactory);
 
-qualifierFactory.$inject = ['$http'];
+qualifierFactory.$inject = ['$http', '$q'];
 
-function qualifierFactory($http) {
+function qualifierFactory($http, $q) {
 
-    var discountQualifiers = [{
-        qualifierID: 1000,
-        discountID: 1001,
-        qualType: 'RegTypeCode',
-        qualCode: '14'
-    }, {
-        qualifierID: 1001,
-        discountID: 1002,
-        qualType: 'MemberType',
-        qualCode: 'M'
-    }];
-
-    var marketingCodeQualifiers = [{
-        qualifierID: 1002,
-        marketingCodeID: 1001,
-        qualType: 'RegTypeCode',
-        qualCode: '14'
-    }, {
-        qualifierID: 1003,
-        marketingCodeID: 1001,
-        qualType: 'MemberType',
-        qualCode: 'M'
-    }, {
-        qualifierID: 1007,
-        marketingCodeID: 1001,
-        qualType: 'RegTypeCode',
-        qualCode: '18'
-    }, {
-        qualifierID: 1004,
-        marketingCodeID: 1002,
-        qualType: 'RegTypeCode',
-        qualCode: '14'
-    }, {
-        qualifierID: 1005,
-        marketingCodeID: 1002,
-        qualType: 'RegTypeCode',
-        qualCode: '16'
-    }, {
-        qualifierID: 1006,
-        marketingCodeID: 1002,
-        qualType: 'MemberType',
-        qualCode: 'M'
-    }];
+    var qualifierRef = rootRef.child('qualifiers');
+    var codeQualRef = rootRef.child('codeQualifiers');
+    var discountQualRef = rootRef.child('discountQualifiers');
 
     return {
         getQualifiersForDiscount: getQualifiersForDiscount,
@@ -64,30 +24,49 @@ function qualifierFactory($http) {
     };
 
     function getQualifiersForDiscount(discountID) {
-        if (!Number.isInteger(discountID))
-            discountID = Number.parseInt(discountID);
-
-        if (!Number.isInteger(discountID))
-            return undefined;
-
-        var quals = _.where(discountQualifiers, {
-            discountID: discountID
+        var defer = $q.defer();
+        discountQualRef.once('value', function(snapshot) {
+            var data = snapshot.val();
+            _.forEach(data, function(item, idx) {
+                item['id'] = idx;
+            });
+            var discountQuals = _.toArray(data);
+            defer.resolve(_.where(discountQuals, {
+                discountID: discountID
+            }));
         });
 
-        return _.groupBy(quals, 'qualType');
+        return defer.promise;
     }
 
-    function getQualifiersForCode(marketingCodeID) {
-        if (!Number.isInteger(marketingCodeID))
-            marketingCodeID = Number.parseInt(marketingCodeID);
+    function getQualifiersForCode(codeID) {
+        var defer = $q.defer();
+        var data;
+        codeQualRef.once('value', function(snapshot) {
+            data = snapshot.val();
 
-        if (!Number.isInteger(marketingCodeID))
-            return undefined;
-
-        var quals = _.where(marketingCodeQualifiers, {
-            marketingCodeID: marketingCodeID
+            var qualifierIDs = _.pluck(_.where(_.toArray(data), {
+                codeID: codeID
+            }), 'qualifierID');
+            defer.resolve(qualifierIDs);
         });
 
-        return _.groupBy(quals, 'qualType');
+        var defer2 = $q.defer();
+
+        defer.promise.then(function(ids) {
+            qualifierRef.once('value', function(snapshot) {
+                data = snapshot.val();
+
+                _.forEach(data, function(item, idx) {
+                    item['id'] = idx;
+                });
+
+                defer2.resolve(_.filter(data, function(item) {
+                    return _.contains(ids, item.id);
+                }));
+            })
+        });
+
+        return defer2.promise;
     }
 };

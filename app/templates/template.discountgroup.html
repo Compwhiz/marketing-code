@@ -6,4 +6,8 @@
         <input type="button" class="button expand" value="Add New Discount">
     </div>
 </div>
-<div class="row" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'" ng-repeat="(index,discount) in discounts" exl-discount="discount"></div>
+<div class="row grayBorder">
+    <div class="columns">
+        <div class="row" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'" ng-repeat="(index,discount) in discounts" exl-discount="discount"></div>
+    </div>
+</div>

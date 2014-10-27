@@ -10,7 +10,7 @@
 angular.module('marketingCodeApp')
     .factory('qualifierFactory', qualifierFactory);
 
-qualifierFactory.$inject = ['$http', '$q','businessClassFactory'];
+qualifierFactory.$inject = ['$http', '$q', 'businessClassFactory'];
 
 function qualifierFactory($http, $q, businessClassFactory) {
 
@@ -21,7 +21,8 @@ function qualifierFactory($http, $q, businessClassFactory) {
     return {
         getQualifiersForDiscount: getQualifiersForDiscount,
         getQualifiersForCode: getQualifiersForCode,
-        saveCodeQualifiers:saveCodeQualifiers
+        saveCodeQualifiers: saveCodeQualifiers,
+        getGroupHeaderText:getGroupHeaderText
     };
 
     function getQualifiersForDiscount(discountID) {
@@ -35,8 +36,8 @@ function qualifierFactory($http, $q, businessClassFactory) {
             discountQuals = _.where(discountQuals, {
                 discountID: discountID
             });
-            _.forEach(discountQuals,function(qual){
-                qual.description = businessClassFactory.
+            _.forEach(discountQuals, function(qual) {
+                //qual.description = businessClassFactory.
             })
         });
 
@@ -63,6 +64,7 @@ function qualifierFactory($http, $q, businessClassFactory) {
 
                 _.forEach(data, function(item, idx) {
                     item['id'] = idx;
+                    item.description = businessClassFactory.selectStatus(item.qualType, item.qualCode).description || item.qualCode;
                 });
 
                 defer2.resolve(_.filter(data, function(item) {
@@ -74,18 +76,34 @@ function qualifierFactory($http, $q, businessClassFactory) {
         return defer2.promise;
     }
 
-    function saveCodeQualifiers(codeID, qualifiers){
-        if(typeof(codeID) == 'undefined')
+    function saveCodeQualifiers(codeID, qualifiers) {
+        if (typeof(codeID) == 'undefined')
             return;
 
-        _.forEach(qualifiers, function(qualifier){
+        _.forEach(qualifiers, function(qualifier) {
             // new qualifier
-            if(typeof(qualifier.id) == 'undefined'){
+            if (typeof(qualifier.id) == 'undefined') {
                 qualifier.id = qualifierRef.push(qualifier).name();
-                codeQualRef.push({codeID:codeID,qualifierID:qualifier.id});
-            }else{
+                codeQualRef.push({
+                    codeID: codeID,
+                    qualifierID: qualifier.id
+                });
+            } else {
                 qualifierRef.child(qualifier.id).update(qualifier);
             }
         });
+    }
+
+    function getGroupHeaderText(type) {
+        switch (type) {
+            case 'REGTYPE':
+                return 'Registration Type';
+            case 'MEMBER':
+                return 'Member Type';
+            case 'DATE':
+                return 'Date Status';
+            default:
+                return type;
+        }
     }
 };

@@ -1,46 +1,46 @@
 // bower:scss
 // endbower
-nav{
-	margin-bottom:10em;
+nav {
+    margin-bottom: 10em;
 }
-
 .requiredFieldIndicator {
     color: #d00;
 }
-
-.rowcolor{
-	background-color:#f6f6f6;
-	padding:5px;
+.rowcolor {
+    background-color: #f6f6f6;
+    padding: 5px;
 }
-
-.altrowcolor{
-	background-color:#e6e6e6;
-	padding:5px;
+.altrowcolor {
+    background-color: #e6e6e6;
+    padding: 5px;
 }
-
-.red{
-	color:red;
+.red {
+    color: red;
 }
-
-.green{
-	color:green;
+.green {
+    color: green;
 }
-
-#footer{
-	margin-top:2em;
+#footer {
+    margin-top: 2em;
 }
-
-.qualSelected{
-	background-color:#ffa500;
+.qualSelected {
+    background-color: #ffa500;
 }
-
-.qualifierOption{
-	padding:5px;
-	cursor:pointer;
-	border:1px solid black;
+.qualifierOption {
+    padding: 5px;
+    cursor: pointer;
+    border: 1px solid black;
 }
-
-#footer{
-	background-color:#e6e6e6;
-	padding:1em;
+#footer {
+    background-color: #e6e6e6;
+    padding: 1em;
+}
+.buttonActive {
+    background-color: #368a55;
+    &:before {
+        content: "\f00c";
+    }
+}
+.grayBorder{
+	border:1px solid #ddd;
 }

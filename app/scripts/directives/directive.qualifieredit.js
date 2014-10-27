@@ -32,31 +32,51 @@ function qualifierEdit() {
     function QualifierEditCtrl($scope, qualifierFactory, businessClassFactory) {
         var vm = this;
 
+        // Properties
         vm.statuses = {};
         vm.memberTypes = [];
         vm.regTypes = [];
         vm.dateStatuses = [];
         vm.qualifiers = {};
         vm.groupedQualifiers = [];
+        vm.selectedStatuses = {};
+        vm.masterSelectedStatuses = {};
 
+        // Functions
         vm.saveAndClose = saveAndClose;
         vm.close = close;
         vm.toggleSelected = toggleSelected;
+        vm.getGroupHeaderText = getGroupHeaderText;
+        vm.isSelected = isSelected;
 
+        // Init
         getAllStatuses();
-getQualifiersForCode();
+        getQualifiersForCode();
 
-        function toggleSelected(qualifier) {
-            qualifier.selected = !qualifier.selected;
+        function toggleSelected(type, code) {
+            if (typeof(code) == 'undefined' || typeof(type) == 'undefined')
+                return;
+
+            if (typeof(vm.selectedStatuses[type]) == 'undefined')
+                vm.selectedStatuses[type] = [];
+
+            if (!_.contains(vm.selectedStatuses[type], code))
+                vm.selectedStatuses[type].push(code);
+            else {
+                var index = _.indexOf(vm.selectedStatuses[type], code);
+                if (index >= 0)
+                    vm.selectedStatuses[type].splice(index, 1);
+            }
         }
 
         function saveAndClose() {
             _.forEach(vm.statuses, function(qualifiers, type) {
                 _.forEach(vm.statuses[type], function(qualifier, index) {
                     var q = getQualifier(type, qualifier.statusCode);
+                    var selected = isSelected(type, qualifier.statusCode);
                     if (typeof(q) != 'undefined') {
-                        q.deleted = !qualifier.selected;
-                    } else if (qualifier.selected) {
+                        q.deleted = !selected;
+                    } else if (selected) {
                         vm.qualifiers.push({
                             qualCode: qualifier.statusCode,
                             qualType: type
@@ -64,11 +84,13 @@ getQualifiersForCode();
                     }
                 });
             });
-            qualifierFactory.saveCodeQualifiers($scope.codeID,vm.qualifiers);
+            qualifierFactory.saveCodeQualifiers($scope.codeID, vm.qualifiers);
+            vm.masterSelectedStatuses = angular.copy(vm.selectedStatuses);
             vm.close();
         }
 
         function close() {
+            vm.selectedStatuses = angular.copy(vm.masterSelectedStatuses);
             $scope.$emit('qualifierEditClosed');
             $($scope.element).foundation('reveal', 'close');
         }
@@ -80,28 +102,42 @@ getQualifiersForCode();
             });
         }
 
-        function getAllStatuses(){
+        function getAllStatuses() {
             businessClassFactory.getAllStatuses().then(function(data) {
-            vm.statuses = data;
-            vm.memberTypes = data.MEMBER;
-            vm.regTypes = data.REGTYPE;
-            vm.dateStatuses = data.DATE;
-        });
+                vm.statuses = data;
+                vm.memberTypes = data.MEMBER;
+                vm.regTypes = data.REGTYPE;
+                vm.dateStatuses = data.DATE;
+            });
         }
 
 
-function getQualifiersForCode(){
-        qualifierFactory.getQualifiersForCode($scope.codeID).then(function(data) {
-            vm.qualifiers = data;
-            vm.groupedQualifiers = _.groupBy(data, 'qualType');
+        function getQualifiersForCode() {
+            qualifierFactory.getQualifiersForCode($scope.codeID).then(function(data) {
+                vm.qualifiers = data;
+                vm.groupedQualifiers = _.groupBy(data, 'qualType');
 
-            _.forEach(vm.groupedQualifiers, function(qualifiers, type) {
-                var codes = _.pluck(qualifiers, 'qualCode');
-                _.forEach(vm.statuses[type], function(status, index) {
-                    status.selected = _.contains(codes, status.statusCode);
+                _.forEach(vm.groupedQualifiers, function(qualifiers, type) {
+                    var codes = _.pluck(qualifiers, 'qualCode');
+
+                    _.forEach(codes, function(code) {
+                        toggleSelected(type, code);
+                    });
                 });
+
+                vm.masterSelectedStatuses = angular.copy(vm.selectedStatuses);
             });
-        });
-    }
+        }
+
+        function isSelected(type, code) {
+            if (typeof(code) == 'undefined' || typeof(type) == 'undefined' || typeof(vm.selectedStatuses[type]) == 'undefined')
+                return false;
+
+            return _.contains(vm.selectedStatuses[type], code);
+        }
+
+        function getGroupHeaderText(type) {
+            return qualifierFactory.getGroupHeaderText(type);
+        }
     }
 }

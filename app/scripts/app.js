@@ -9,30 +9,36 @@
  * Main module of the application.
  */
 angular
-  .module('marketingCodeApp', [
-    'ngAnimate',
-    'ngCookies',
-    'ngResource',
-    'ngRoute',
-    'ngSanitize',
-    'ngTouch',
-    'mm.foundation'
-  ])
-  .config(function ($routeProvider) {
-    $routeProvider
-      .when('/', {
-        templateUrl: 'views/view.main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
-      })
-      .when('/marketingCode/:id?', {
-        templateUrl: 'views/view.marketingCode.html',
-        controller:'MarketingCodeCtrl',
-        controllerAs: 'ctrl'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
-  });
+    .module('marketingCodeApp', [
+        'ngAnimate',
+        'ngCookies',
+        'ngResource',
+        'ngRoute',
+        'ngSanitize',
+        'ngTouch',
+        'mm.foundation'
+    ])
+    .config(function($routeProvider) {
+        $routeProvider
+            .when('/', {
+                templateUrl: 'views/view.main.html',
+                controller: 'MainCtrl',
+                controllerAs: 'main'
+            })
+            .when('/marketingCode/:id?', {
+                templateUrl: 'views/view.marketingCode.html',
+                controller: 'MarketingCodeCtrl',
+                controllerAs: 'ctrl'
+            })
+            .otherwise({
+                redirectTo: '/'
+            });
+    });
 
-  var rootRef = new Firebase('https://scorching-inferno-7654.firebaseio.com/');
+var rootRef = new Firebase('https://scorching-inferno-7654.firebaseio.com/');
+
+if (typeof String.prototype.startsWith != 'function') {
+    String.prototype.startsWith = function(str) {
+        return this.slice(0, str.length) == str;
+    };
+}

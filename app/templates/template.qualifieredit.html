@@ -1,54 +1,25 @@
 <div class="row">
-	<div class="columns">
-		<div class="row">
-				<h4>Member Types</h4>
-		<div class="row">
-			<div class="columns">
-				<ul class="small-block-grid-3">
-					<li ng-repeat="type in ctrl.statuses.MEMBER">
-						<div class="qualifierOption" ng-click="ctrl.toggleSelected(type)" ng-class="type.selected ? 'qualSelected' : ''" >{{type.statusCode}}: {{type.description}}</div>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<div class="row">
-			<div class="columns">
-				<h4>Registration Types</h4>
-			</div>
-		</div>
-		<div class="row">
-			<div class="columns">
-				<ul class="small-block-grid-3">
-					<li  ng-repeat="type in ctrl.statuses.REGTYPE">
-						<div  class="qualifierOption" ng-class="type.selected ? 'qualSelected' : ''" ng-click="ctrl.toggleSelected(type)">{{type.statusCode}}: {{type.description}}</div>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<div class="row">
-			<div class="columns">
-				<h4>Date Statuses</h4>
-			</div>
-		</div>
-		<div class="row">
-			<div class="columns">
-				<ul class="small-block-grid-3">
-					<li ng-repeat="type in ctrl.statuses.DATE">
-						<div class="qualifierOption" ng-class="type.selected ? 'qualSelected' : ''" ng-click="ctrl.toggleSelected(type)">
-							{{type.statusCode}}: {{type.description}}
-						</div>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<br>
-		<div class="row">
-			<div class="columns medium-6 large-6">
-				<a ng-click="ctrl.close()" class="button expand secondary">Cancel</a>
-			</div>
-			<div class="columns medium-6 large-6">
-				<a ng-click="ctrl.saveAndClose()" class="button expand success">Save</a>
-			</div>
-		</div>
-	</div>
+    <div class="columns">
+        <div class="row" ng-repeat="(type, statuses) in ctrl.statuses">
+            <h4>{{ctrl.getGroupHeaderText(type)}}</h4>
+            <div class="row">
+                <div class="columns panel">
+                    <ul class="small-block-grid-3">
+                        <li ng-repeat="status in statuses">
+                            <div class="qualifierOption" ng-click="ctrl.toggleSelected($parent.type, status.statusCode)" ng-class="ctrl.isSelected($parent.type, status.statusCode) ? 'qualSelected' : ''">{{status.statusCode}} - {{status.description}}</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="columns medium-6 large-6">
+                <a ng-click="ctrl.close()" class="button expand secondary">Cancel</a>
+            </div>
+            <div class="columns medium-6 large-6">
+                <a ng-click="ctrl.saveAndClose()" class="button expand success">Save</a>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,10 +1,10 @@
 <div class="columns small-2">
-    <input type="button" class="button small expand" value="Edit">
+    <input type="button" class="button small expand" value="Edit" ng-click="ctrl.openDiscountModal($parent.$index)">
 </div>
 <div class="columns small-10">
     <div class="row">
         <div class="columns small-3">
-            {{discount.displayType}} {{discount.displayAmount}}
+            {{ctrl.displayType}} {{ctrl.displayAmount}}
         </div>
         <div class="columns small-3 end">
             <ul class="no-bullet">
@@ -18,8 +18,10 @@
     <div class="row">
         <div class="columns">
             <h5>Discount Qualifiers</h5>
-            {{discount.qualifiers}}
+            {{ctrl.qualifiers}}
         </div>
     </div>
 </div>
+<div id="discountEditModal{{$parent.$index}}" class="reveal-modal" data-reveal>
+    <div discount-edit="discount.id"></div>
 </div>

@@ -1,4 +1,5 @@
 <div ng-if="ctrl.loading" class="text-center">
+    <strong>Loading</strong>
     <span class="fa fa-4x fa-spinner fa-spin"></span>
 </div>
 <div class="text-center" ng-if="ctrl.codeDoesNotExist">
@@ -10,10 +11,11 @@
             <div class="row">
                 <div class="columns small-3">Is Active</div>
                 <div class="columns small-offset-1 large-5 small-8 end">
-                    <div class="switch">
+                    <!-- <div class="switch">
                         <input type="checkbox" id="cbIsActive" ng-model="ctrl.code.isActive">
                         <label for="cbIsActive"></label>
-                    </div>
+                    </div> -->
+                    <input type="button" ng-click="ctrl.code.isActive = !ctrl.code.isActive" class="button expand" ng-class="(ctrl.code.isActive) ? 'success' : 'alert'" ng-value="(ctrl.code.isActive) ? 'Active' : 'Inactive'" />
                 </div>
             </div>
         </div>
@@ -61,143 +63,143 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="columns large-10">
-            <div class="row">
-                <div class="columns small-3">
-                    Limit
-                </div>
-                <div class="columns small-offset-1 large-5 small-8 end">
-                    <input type="text" ng-model="ctrl.code.limit">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="columns large-10">
-            <div class="row">
-                <div class="columns small-3">
-                    Begin Date
-                </div>
-                <div class="columns small-1 requiredFieldIndicator">
-                    <span class="fa fa-asterisk"></span>
-                </div>
-                <div class="columns large-5 small-8 end">
-                    <div class="row collapse">
-                        <div class="columns small-10">
-                            <input type="text" id="inputBeginDate" date-picker ng-model="ctrl.code.beginDate">
-                        </div>
-                        <div class="columns small-2">
-                            <a href="#" class="button postfix " date-picker-open="inputBeginDate">
-                                <span class="fa fa-calendar"></span>
-                            </a>
-                        </div>
+    <div ng-show="ctrl.code.codeType == 'DISCOUNT'">
+        <div class="row">
+            <div class="columns large-10">
+                <div class="row">
+                    <div class="columns small-3">
+                        Limit
+                    </div>
+                    <div class="columns small-offset-1 large-5 small-8 end">
+                        <input type="text" ng-model="ctrl.code.limit">
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="columns large-10">
-            <div class="row">
-                <div class="columns small-offset-4 large-5 small-8 end">
-                    <div class="row collapse">
-                        <div class="columns small-10">
-                            <input type="text" id="inputBeginTime" time-picker ng-model="ctrl.code.beginTime">
-                        </div>
-                        <div class="columns small-2">
-                            <a href="#" class="button postfix" time-picker-open="inputBeginTime">
-                                <span class="fa fa-clock-o"></span>
-                            </a>
+        <div class="row">
+            <div class="columns large-10">
+                <div class="row">
+                    <div class="columns small-3">
+                        Begin Date
+                    </div>
+                    <div class="columns small-1 requiredFieldIndicator">
+                        <span class="fa fa-asterisk"></span>
+                    </div>
+                    <div class="columns large-5 small-8 end">
+                        <div class="row collapse">
+                            <div class="columns small-10">
+                                <input type="text" id="inputBeginDate" date-picker ng-model="ctrl.code.beginDate">
+                            </div>
+                            <div class="columns small-2">
+                                <a href="#" class="button postfix " date-picker-open="inputBeginDate">
+                                    <span class="fa fa-calendar"></span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="columns large-10">
-            <div class="row">
-                <div class="columns small-3">
-                    End Date
-                </div>
-                <div class="columns small-1 requiredFieldIndicator">
-                    <span class="fa fa-asterisk"></span>
-                </div>
-                <div class="columns large-5 small-8 end">
-                    <div class="row collapse">
-                        <div class="columns small-10">
-                            <input type="text" id="inputEndDate" date-picker ng-model="ctrl.code.endDate">
-                        </div>
-                        <div class="columns small-2">
-                            <a href="#" class="button postfix" date-picker-open="inputEndDate">
-                                <span class="fa fa-calendar"></span>
-                            </a>
+        <div class="row">
+            <div class="columns large-10">
+                <div class="row">
+                    <div class="columns small-offset-4 large-5 small-8 end">
+                        <div class="row collapse">
+                            <div class="columns small-10">
+                                <input type="text" id="inputBeginTime" time-picker ng-model="ctrl.code.beginTime">
+                            </div>
+                            <div class="columns small-2">
+                                <a href="#" class="button postfix" time-picker-open="inputBeginTime">
+                                    <span class="fa fa-clock-o"></span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="columns large-10">
-            <div class="row">
-                <div class="columns small-offset-4 large-5 small-8 end">
-                    <div class="row collapse">
-                        <div class="columns small-10">
-                            <input type="text" id="inputEndTime" time-picker ng-model="ctrl.code.endTime">
-                        </div>
-                        <div class="columns small-2">
-                            <a href="#" class="button postfix" time-picker-open="inputEndTime">
-                                <span class="fa fa-clock-o"></span>
-                            </a>
+        <div class="row">
+            <div class="columns large-10">
+                <div class="row">
+                    <div class="columns small-3">
+                        End Date
+                    </div>
+                    <div class="columns small-1 requiredFieldIndicator">
+                        <span class="fa fa-asterisk"></span>
+                    </div>
+                    <div class="columns large-5 small-8 end">
+                        <div class="row collapse">
+                            <div class="columns small-10">
+                                <input type="text" id="inputEndDate" date-picker ng-model="ctrl.code.endDate">
+                            </div>
+                            <div class="columns small-2">
+                                <a href="#" class="button postfix" date-picker-open="inputEndDate">
+                                    <span class="fa fa-calendar"></span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row" ng-show="ctrl.code.codeType == 'DISCOUNT'">
-        <div class="columns">
-            <div class="row">
-                <div class="columns">
-                    <div class="row">
-                        <div class="columns large-8">
-                            <h2>Who Can Use this Code?</h2>
-                        </div>
-                        <div class="columns large-4">
-                            <input type="button" class="button expand" value="Edit Who Can Use this Code" ng-click="ctrl.openQualifierModal()">
-                        </div>
-                    </div>
-                    <div ng-show="ctrl.loadingCodeQualifiers" class="row">
-                <div class="columns">
-                    <span class="fa fa-spinner fa-4x fa-spin"></span>
-                </div>
-            </div>
-                    <div ng-hide="ctrl.loadingCodeQualifiers" class="row" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'" ng-repeat="(type, qualifiers) in ctrl.qualifiers">
-                        <div class="columns small-2">
-                            <strong>{{type}}:</strong>
-                        </div>
-                        <div class="columns small-10">
-                            <ul class="small-block-grid-2 large-block-grid-4">
-                            <li ng-repeat="qualifier in qualifiers">{{qualifier.qualCode}}: {{qualifier.description}}
-                            </li>
-                            </ul>
+        <div class="row">
+            <div class="columns large-10">
+                <div class="row">
+                    <div class="columns small-offset-4 large-5 small-8 end">
+                        <div class="row collapse">
+                            <div class="columns small-10">
+                                <input type="text" id="inputEndTime" time-picker ng-model="ctrl.code.endTime">
+                            </div>
+                            <div class="columns small-2">
+                                <a href="#" class="button postfix" time-picker-open="inputEndTime">
+                                    <span class="fa fa-clock-o"></span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <br>
-    <div class="row" ng-show="ctrl.code.codeType == 'DISCOUNT'">
-        <div class="columns">
-            <div class="row">
-                <div class="columns">
-                    <div class="row" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'" ng-repeat="discount in ctrl.discounts">
-                        <div discount-group="discount"></div>{{id}}
+        <div class="row">
+            <div class="columns">
+                <div class="row">
+                    <div class="columns">
+                        <div class="row">
+                            <div class="columns large-8">
+                                <h2>Who Can Use this Code?</h2>
+                            </div>
+                            <div class="columns large-4">
+                                <input type="button" class="button expand" value="Edit Who Can Use this Code" ng-click="ctrl.openQualifierModal()">
+                            </div>
+                        </div>
+                        <div ng-show="ctrl.loadingCodeQualifiers" class="row">
+                            <div class="columns">
+                                <span class="fa fa-spinner fa-4x fa-spin"></span>
+                            </div>
+                        </div>
+                        <div class="row grayBorder" ng-hide="ctrl.loadingCodeQualifiers">
+                            <div class="columns">
+                                <div class="row" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'" ng-repeat="(type, qualifiers) in ctrl.qualifiers">
+                                    <div class="columns small-3">
+                                        <strong>{{ctrl.getGroupHeaderText(type)}}:</strong>
+                                    </div>
+                                    <div class="columns small-9">
+                                        <ul class="small-block-grid-2 large-block-grid-4">
+                                            <li ng-repeat="qualifier in qualifiers">{{qualifier.qualCode}} - {{qualifier.description}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="columns">
+                <div discount-group="ctrl.discounts"></div>
             </div>
         </div>
     </div>

@@ -15,11 +15,20 @@ MarketingCodeCtrl.$inject = ['$scope', '$routeParams', '$location', 'marketingCo
 function MarketingCodeCtrl($scope, $routeParams, $location, marketingCodeFactory, discountFactory, qualifierFactory) {
     var vm = this;
 
+    // Properties
     vm.loading = true;
     vm.codeDoesNotExist = false;
     vm.id = $routeParams.id;
+    vm.qualifiers = [];
+    vm.discounts = [];
     var hasID = vm.id && vm.id != null && vm.id != '';
 
+    // Functions
+    vm.save = saveCode;
+    vm.openQualifierModal = openQualifierModal;
+    vm.getGroupHeaderText = getGroupHeaderText;
+
+    // Init
     if (hasID) {
         marketingCodeFactory.getMarketingCode(vm.id).then(function(data) {
             vm.masterCode = data;
@@ -41,19 +50,17 @@ function MarketingCodeCtrl($scope, $routeParams, $location, marketingCodeFactory
     marketingCodeFactory.getCodeTypes().then(function(data) {
         vm.codeTypes = data;
     });
-    vm.discounts = [];
+
     if (hasID) {
         discountFactory.getDiscountsForCode(vm.id).then(function(data) {
-            vm.discounts = _.groupBy(data, 'displayGroup');
+            vm.discounts = data;
         });
     }
-    vm.qualifiers = [];
+
     getCodeQualifiers();
 
-    vm.save = saveCode;
-    vm.openQualifierModal = openQualifierModal;
-
-    $scope.$on('qualifierEditClosed',function(){
+    // Events
+    $scope.$on('qualifierEditClosed', function() {
         getCodeQualifiers();
     });
 
@@ -64,18 +71,22 @@ function MarketingCodeCtrl($scope, $routeParams, $location, marketingCodeFactory
 
     function openQualifierModal() {
         $('div#qualifierEditModal').foundation('reveal', 'open', {
-            close_on_esc:false,
-            close_on_background_click:false
+            close_on_esc: false,
+            close_on_background_click: false
         });
     }
 
-    function getCodeQualifiers(){
+    function getCodeQualifiers() {
         vm.loadingCodeQualifiers = true;
         qualifierFactory.getQualifiersForCode(vm.id).then(function(data) {
-        vm.qualifiers = _.groupBy(data,'qualType');
-        vm.loadingCodeQualifiers = false;
-    }, function(){
-        vm.loadingCodeQualifiers = true;
-    });
+            vm.qualifiers = _.groupBy(data, 'qualType');
+            vm.loadingCodeQualifiers = false;
+        }, function() {
+            vm.loadingCodeQualifiers = true;
+        });
+    }
+
+    function getGroupHeaderText(type) {
+        return qualifierFactory.getGroupHeaderText(type);
     }
 }

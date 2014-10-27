@@ -23,6 +23,8 @@ function discountFactory($http, $q) {
         getDiscountsForCode: getDiscountsForCode,
         getDiscountType: getDiscountType,
         getTargetsForDiscount: getTargetsForDiscount,
+        getDiscount: getDiscount,
+        getDiscountWithTargets:getDiscountWithTargets,
     };
 
     function getDiscountTypes() {
@@ -52,6 +54,35 @@ function discountFactory($http, $q) {
 
     function getDiscountType(value) {
         return value;
+    }
+
+    function getDiscountWithTargets(discountID){
+        var defer = $q.defer();
+
+        getDiscount(discountID).then(function(data){
+            getTargetsForDiscount(discountID).then(function(targets){
+                data.targets = targets;
+                defer.resolve(data);
+            });
+        });
+
+        return defer.promise;
+    }
+
+    function getDiscount(discountID) {
+        var defer = $q.defer();
+
+        if (typeof(discountID) == 'undefined')
+            defer.resolve(undefined);
+        else {
+            discountRef.child(discountID).once('value', function(snapshot) {
+                defer.resolve(snapshot.val());
+            }, function() {
+                defer.resolve(undefined);
+            });
+        }
+
+        return defer.promise;
     }
 
     function getTargetsForDiscount(discountID) {

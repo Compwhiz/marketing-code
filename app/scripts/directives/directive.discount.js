@@ -18,29 +18,46 @@ function discount(discountFactory, qualifierFactory) {
         //require: '^discountGroup',
         templateUrl: '../templates/template.discount.html',
         scope: {
-            discount: '=exlDiscount'
+            discount: '=exlDiscount',
         },
+        controller: DiscountCtrl,
+        controllerAs: 'ctrl'
     };
 
     return directive;
 
-    function link(scope, element, attrs) {
-        scope.discount.displayAmount = formatDiscountAmount(scope.discount);
-        scope.discount.displayType = discountFactory.getDiscountType(scope.discount.type);
-        scope.discount.qualifiers = qualifierFactory.getQualifiersForDiscount(scope.discount.id);
+    function link(scope, element, attrs) {}
 
-        discountFactory.getTargetsForDiscount(scope.discount.id).then(function(data){
-            scope.targets = data;
+    DiscountCtrl.$inject = ['$scope', 'discountFactory', 'qualifierFactory'];
+
+    function DiscountCtrl($scope, discountFactory, qualifierFactory) {
+        var vm = this;
+
+        // Functions
+        vm.discount = $scope.discount;
+        vm.formatDiscountAmount = formatDiscountAmount;
+        vm.openDiscountModal = openDiscountModal;
+        vm.targets = [];
+
+        // Init
+        discountFactory.getTargetsForDiscount(vm.discount.id).then(function(data) {
+            vm.targets = data;
         });
-    }
+        vm.displayAmount = formatDiscountAmount(vm.discount);
+        vm.displayType = discountFactory.getDiscountType(vm.discount.type);
+        vm.qualifiers = qualifierFactory.getQualifiersForDiscount(vm.discount.id);
 
-    function formatDate(date) {
-        return moment(date).format('h:mm:ss A M/D/YYYY');
-    }
+        function formatDiscountAmount(discount) {
+            if (discount.type == 'PERCENT')
+                return discount.amount + '%';
+            return '$' + discount.amount;
+        }
 
-    function formatDiscountAmount(discount) {
-        if (discount.type == 'PERCENT')
-            return discount.amount + '%';
-        return '$' + discount.amount;
+        function openDiscountModal(index) {
+            $('div#discountEditModal' + index).foundation('reveal', 'open', {
+                close_on_esc: false,
+                close_on_background_click: false
+            });
+        }
     }
 }

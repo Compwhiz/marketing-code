@@ -15,7 +15,9 @@ businessClassFactory.$inject = ['$q'];
 function businessClassFactory($q) {
 
     var statusRef = rootRef.child('statuses');
+    var showItemRef = rootRef.child('showItems');
     var statuses;
+    var showItems;
 
     statusRef.once('value', function(snapshot) {
         statuses = _.groupBy(snapshot.val(), 'type');
@@ -24,8 +26,8 @@ function businessClassFactory($q) {
     // Public API here
     return {
         getAllStatuses: getAllStatuses,
-        selectRegStatus: selectRegStatus,
-        selectMemberStatus: selectMemberStatus
+        selectStatus: selectStatus,
+        getAllShowItems: getAllShowItems,
     };
 
     function getAllStatuses() {
@@ -41,28 +43,34 @@ function businessClassFactory($q) {
         return defer.promise;
     }
 
-    function selectRegStatus(statusCode) {
-        return _.findWhere(statuses.REGTYPE, {
+    function selectStatus(type, statusCode) {
+        if (typeof(type) == 'undefined' || typeof(statuses[type]) == 'undefined')
+            return statusCode;
+
+        return _.findWhere(statuses[type], {
             statusCode: statusCode
         });
     }
 
-    function selectMemberStatus(statusCode) {
-        return _.findWhere(statuses.memberTypes, {
-            statusCode: statusCode
-        });
-    }
+    function getAllShowItems() {
+        var defer = $q.defer();
 
-    function selectStatus(type,statusCode){
-        switch(type){
-            case 'REGTYPE':
-            break;
-            case 'MEMBER':
-            break;
-            case 'DATE':
-            break;
-            default:
-            break;
+        if (typeof(showItems) != 'undefined')
+            defer.resolve(showItems);
+        else {
+            showItemRef.once('value', function(snapshot) {
+                    showItems = snapshot.val();
+
+                    _.forEach(showItems, function(item, id) {
+                        item.id = id;
+                    })
+
+                    defer.resolve(showItems);
+                },
+                function(error) {
+                    defer.resolve(undefined);
+                });
         }
+        return defer.promise;
     }
 }

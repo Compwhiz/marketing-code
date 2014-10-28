@@ -42,18 +42,21 @@
         </section>
     </nav>
 
-  <br>
-  
+    <br>
+
     <!-- Add your site or application content here -->
     <div ng-view=""></div>
 
     <div id="footer" class="text-center">
-                <div class="row">
-                    <div class="columns">
-                        <div class="left"><a target="_blank" href="mailto:josh.poole@experient-inc.com">Poole</a></div>
-                        <div class="right">2014&nbsp;<span class="fa fa-copyright"></span></div>
-                    </div>
+        <div class="row">
+            <div class="columns">
+                <div class="left"><a target="_blank" href="mailto:josh.poole@experient-inc.com">Poole</a>
                 </div>
+                <div class="right">2014&nbsp;
+                    <span class="fa fa-copyright"></span>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- build:js(.) scripts/oldieshim.js -->
@@ -90,21 +93,21 @@
 
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/main.js"></script>
-    <script src="scripts/directives/directive.discount.js"></script>
-    <script src="scripts/directives/directive.qualifier.js"></script>
-    <script src="scripts/services/factory.discount.js"></script>
-    <script src="scripts/services/factory.marketingcode.js"></script>
-    <script src="scripts/directives/directive.marketingcode.js"></script>
-    <script src="scripts/controllers/marketingcode.js"></script>
-    <script src="scripts/directives/directive.pickadate.js"></script>
-    <script src="scripts/directives/directive.pickatime.js"></script>
-    <script src="scripts/services/factory.qualifier.js"></script>
-    <script src="scripts/directives/directive.qualifieredit.js"></script>
-    <script src="scripts/services/factory.businessclassfactory.js"></script>
-    <script src="scripts/directives/directive.discountgroup.js"></script>
-    <script src="scripts/directives/directive.discountedit.js"></script>
+    <script src="app.js"></script>
+    <script src="main/main.js"></script>
+    <script src="discount/directive.discount.js"></script>
+    <script src="discount/factory.discount.js"></script>
+    <script src="discount/directive.discountgroup.js"></script>
+    <script src="discount/directive.discountedit.js"></script>
+    <script src="marketingCode/factory.marketingcode.js"></script>
+    <script src="marketingCode/directive.marketingcode.js"></script>
+    <script src="marketingCode/marketingcode.js"></script>
+    <script src="qualifier/directive.qualifier.js"></script>
+    <script src="qualifier/factory.qualifier.js"></script>
+    <script src="qualifier/directive.qualifieredit.js"></script>
+    <script src="shared/directive.pickadate.js"></script>
+    <script src="shared/directive.pickatime.js"></script>
+    <script src="shared/factory.businessclassfactory.js"></script>
     <!-- endbuild -->
 
 </body>

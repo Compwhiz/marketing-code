@@ -16,7 +16,7 @@ function discountFactory($http, $q) {
 
     var discountRef = rootRef.child('discounts');
     var discountTargetRef = rootRef.child('discountTargets');
-    var discountTypeRef = rootRef.child('discountType');
+    var discountTypeRef = rootRef.child('discountTypes');
 
     return {
         getDiscountTypes: getDiscountTypes,
@@ -24,7 +24,8 @@ function discountFactory($http, $q) {
         getDiscountType: getDiscountType,
         getTargetsForDiscount: getTargetsForDiscount,
         getDiscount: getDiscount,
-        getDiscountWithTargets:getDiscountWithTargets,
+        getDiscountWithTargets: getDiscountWithTargets,
+        saveDiscounts:saveDiscounts,
     };
 
     function getDiscountTypes() {
@@ -56,11 +57,11 @@ function discountFactory($http, $q) {
         return value;
     }
 
-    function getDiscountWithTargets(discountID){
+    function getDiscountWithTargets(discountID) {
         var defer = $q.defer();
 
-        getDiscount(discountID).then(function(data){
-            getTargetsForDiscount(discountID).then(function(targets){
+        getDiscount(discountID).then(function(data) {
+            getTargetsForDiscount(discountID).then(function(targets) {
                 data.targets = targets;
                 defer.resolve(data);
             });
@@ -98,5 +99,9 @@ function discountFactory($http, $q) {
             }));
         });
         return defer.promise;
+    }
+
+    function saveDiscounts(codeID, discounts) {
+
     }
 }

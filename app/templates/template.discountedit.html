@@ -3,13 +3,93 @@
         <h2>Edit Discount</h2>
     </div>
 </div>
+<hr>
 <div class="row">
     <div class="columns">
         <div class="row">
-            <div class="columns">
-                <input type="text" placeholder="Search Show Items" />
+            <div class="columns medium-6 large-6">
+                <div class="row">
+                    <div class="columns">
+                        <strong>Discount Type</strong>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="columns">
+                        <select name="dropDownType" ng-options="type.value as type.key for type in ctrl.discountTypes" ng-model="ctrl.discount.type"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="columns medium-6 large-6">
+                <div class="row">
+                    <div class="columns">
+                        <strong>Discount Amount</strong>
+                    </div>
+                </div>
+                <div class="row collapse">
+                    <div class="columns small-1" ng-if="ctrl.discount.type != 'PERCENT'">
+                        <span class="prefix">
+                            <span class="fa fa-dollar"></span>
+                        </span>
+                    </div>
+                    <div class="columns small-11">
+                        <input type="text" ng-model="ctrl.discount.amount">
+                    </div>
+                    <div class="columns small-1" ng-if="ctrl.discount.type == 'PERCENT'">
+                        <span class="postfix">
+                            %
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="row">
+            <div class="columns">
+                <strong>Discount Targets</strong>
+            </div>
+        </div>
+        <div class="row collapse">
+            <div class="columns small-11">
+                <input type="text" placeholder="Search Show Items" ng-model="ctrl.showItemSearch" />
+            </div>
+            <div class="columns small-1">
+                <a class="button postfix" ng-click="ctrl.showItemSearch = ''">
+                    <span class="fa fa-times"></span>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="columns">
+                <strong>Available Show Item Targets</strong>
+            </div>
+        </div>
+        <div class="row">
+            <div class="columns">
+                <select name="showItemList" id="showItemList" multiple="multiple" size="2" class="showItemSelectList">
+                    <option value="{{showItem.showItemCode}}" ng-repeat="showItem in ctrl.getPossibleShowItemTargets()">{{showItem.description}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="columns">
+                <a class="button small right" ng-click="ctrl.addSelectedShowItemTargets()">Add <span class="fa fa-plus"></span></a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="columns">
+                <strong>Selected Show Item Targets</strong>
+            </div>
+        </div>
+        <div class="row grayBorder">
+            <div class="columns">
+                <div class="row" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'" ng-repeat="target in ctrl.targets">
+                    <div class="columns">
+                        <a class="button small alert right" ng-click="ctrl.removeShowItemTarget(target)">Remove</a>
+                        {{target}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
         <div class="row">
             <div class="columns medium-6 large-6">
                 <a ng-click="ctrl.close()" class="button expand secondary">Cancel</a>

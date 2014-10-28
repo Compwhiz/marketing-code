@@ -35,12 +35,9 @@ nav {
     background-color: #e6e6e6;
     padding: 1em;
 }
-.buttonActive {
-    background-color: #368a55;
-    &:before {
-        content: "\f00c";
-    }
-}
 .grayBorder{
 	border:1px solid #ddd;
+}
+.showItemSelectList{
+    height:150px;
 }

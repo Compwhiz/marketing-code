@@ -16,7 +16,7 @@ function discountEdit() {
         templateUrl: '../templates/template.discountedit.html',
         restrict: 'EA',
         scope: {
-            discountID: '=discountEdit'
+            discountID: '=did'
         },
         link: link,
         controller: DiscountEditCtrl,
@@ -27,7 +27,7 @@ function discountEdit() {
         scope.element = element;
     }
 
-    DiscountEditCtrl.$inject = ['$scope', '$q', 'discountFactory', 'businessClassFactory'];
+    DiscountEditCtrl.$inject = ['$sope', '$q', 'discountFactory', 'businessClassFactory'];
 
     function DiscountEditCtrl($scope, $q, discountFactory, businessClassFactory) {
         var vm = this;

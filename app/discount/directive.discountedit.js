@@ -16,7 +16,7 @@ function discountEdit() {
         templateUrl: '../templates/template.discountedit.html',
         restrict: 'EA',
         scope: {
-            discountID: '=did'
+            discountID: '=discountEdit'
         },
         link: link,
         controller: DiscountEditCtrl,

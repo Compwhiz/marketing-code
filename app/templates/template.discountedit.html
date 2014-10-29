@@ -8,6 +8,14 @@
     <div class="columns">
         <div class="row">
             <div class="columns medium-6 large-6">
+                <a ng-click="ctrl.close()" class="button small expand secondary">Cancel</a>
+            </div>
+            <div class="columns medium-6 large-6">
+                <a ng-click="ctrl.saveAndClose()" class="button small expand success">Save</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="columns medium-6 large-6">
                 <div class="row">
                     <div class="columns">
                         <strong>Discount Type</strong>
@@ -59,7 +67,8 @@
         </div>
         <div class="row">
             <div class="columns">
-                <a class="button small right" ng-click="ctrl.addSelectedShowItemTargets()"><span class="fa fa-plus-circle fa-lg"></span>&nbsp;Add</a>
+                <a class="button small right" ng-click="ctrl.addSelectedShowItemTargets()">
+                    <span class="fa fa-plus-circle fa-lg"></span>&nbsp;Add</a>
                 <h4>Available Discount Targets</h4>
             </div>
         </div>
@@ -72,14 +81,15 @@
         </div>
         <div class="row">
             <div class="columns">
-                
+
             </div>
         </div>
         <div class="row" ng-show="ctrl.targets.length > 0">
             <div class="columns">
                 <div class="row">
                     <div class="columns">
-                    <a class="button small alert right" ng-click="ctrl.clearSelectedShowItemTargets()"><span class="fa fa-minus-circle fa-lg"></span>&nbsp;Remove All</a>
+                        <a class="button small alert right" ng-click="ctrl.clearSelectedShowItemTargets()">
+                            <span class="fa fa-minus-circle fa-lg"></span>&nbsp;Remove All</a>
                         <h4>Selected Discount Targets</h4>
                     </div>
                 </div>
@@ -87,7 +97,8 @@
                     <div class="columns">
                         <div class="row" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'" ng-repeat="target in ctrl.targets">
                             <div class="columns">
-                                <a class="button small alert right" ng-click="ctrl.removeShowItemTarget(target)"><span class="fa fa-minus-circle fa-lg pull-left"></span>&nbsp;Remove</a>
+                                <a class="button small alert right" ng-click="ctrl.removeShowItemTarget(target)">
+                                    <span class="fa fa-minus-circle fa-lg pull-left"></span>&nbsp;Remove</a>
                                 {{target}}
                             </div>
                         </div>
@@ -98,10 +109,10 @@
         <br>
         <div class="row">
             <div class="columns medium-6 large-6">
-                <a ng-click="ctrl.close()" class="button expand secondary">Cancel</a>
+                <a ng-click="ctrl.close()" class="button small expand secondary">Cancel</a>
             </div>
             <div class="columns medium-6 large-6">
-                <a ng-click="ctrl.saveAndClose()" class="button expand success">Save</a>
+                <a ng-click="ctrl.saveAndClose()" class="button small expand success">Save</a>
             </div>
         </div>
     </div>

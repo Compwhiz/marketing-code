@@ -59,7 +59,8 @@
         </div>
         <div class="row">
             <div class="columns">
-                <strong>Available Show Item Targets</strong>
+                <a class="button small right" ng-click="ctrl.addSelectedShowItemTargets()"><span class="fa fa-plus-circle fa-lg"></span>&nbsp;Add</a>
+                <h4>Available Show Item Targets</h4>
             </div>
         </div>
         <div class="row">
@@ -71,20 +72,25 @@
         </div>
         <div class="row">
             <div class="columns">
-                <a class="button small right" ng-click="ctrl.addSelectedShowItemTargets()">Add <span class="fa fa-plus"></span></a>
+                
             </div>
         </div>
-        <div class="row">
+        <div class="row" ng-show="ctrl.targets.length > 0">
             <div class="columns">
-                <strong>Selected Show Item Targets</strong>
-            </div>
-        </div>
-        <div class="row grayBorder">
-            <div class="columns">
-                <div class="row" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'" ng-repeat="target in ctrl.targets">
+                <div class="row">
                     <div class="columns">
-                        <a class="button small alert right" ng-click="ctrl.removeShowItemTarget(target)">Remove</a>
-                        {{target}}
+                    <a class="button small alert right" ng-click="ctrl.clearSelectedShowItemTargets()"><span class="fa fa-minus-circle fa-lg"></span>&nbsp;Remove All</a>
+                        <h4>Selected Show Item Targets</h4>
+                    </div>
+                </div>
+                <div class="row grayBorder">
+                    <div class="columns">
+                        <div class="row" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'" ng-repeat="target in ctrl.targets">
+                            <div class="columns">
+                                <a class="button small alert right" ng-click="ctrl.removeShowItemTarget(target)"><span class="fa fa-minus-circle fa-lg pull-left"></span>&nbsp;Remove</a>
+                                {{target}}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

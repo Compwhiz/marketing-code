@@ -46,11 +46,12 @@ function discountEdit() {
         vm.addSelectedShowItemTargets = addSelectedShowItemTargets;
         vm.getPossibleShowItemTargets = getPossibleShowItemTargets;
         vm.removeShowItemTarget = removeShowItemTarget;
+        vm.clearSelectedShowItemTargets = clearSelectedShowItemTargets;
 
         init();
 
         function init() {
-            discountFactory.getDiscountTypes().then(function(data){
+            discountFactory.getDiscountTypes().then(function(data) {
                 vm.discountTypes = data;
             });
 
@@ -74,13 +75,24 @@ function discountEdit() {
             $($scope.element).foundation('reveal', 'close');
             vm.discount = angular.copy(vm.masterDiscount);
             vm.targets = _.pluck(vm.discount.targets, 'target');
+            vm.showItemSearch = '';
             $scope.$emit('discountEditClosed', [vm.discount.id]);
+        }
+
+        function clearSelectedShowItemTargets() {
+            vm.targets = [];
         }
 
         function addSelectedShowItemTargets() {
             var items = getSelectedShowItemTargets();
             if (items != null && items != '' && items != [])
                 vm.targets = vm.targets.concat(items);
+            else {
+                items = getPossibleShowItemTargets();
+                // add if there is only 1 search result
+                if (items.length == 1)
+                    vm.targets = vm.targets.concat(_.pluck(items, 'showItemCode'));
+            }
         }
 
         function getSelectedShowItemTargets() {

@@ -10,9 +10,9 @@
 angular.module('marketingCodeApp')
     .factory('discountFactory', discountFactory);
 
-discountFactory.$inject = ['$http', '$q'];
+discountFactory.$inject = ['$http', '$q', 'businessClassFactory'];
 
-function discountFactory($http, $q) {
+function discountFactory($http, $q, businessClassFactory) {
 
     var discountRef = rootRef.child('discounts');
     var discountTargetRef = rootRef.child('discountTargets');
@@ -25,7 +25,8 @@ function discountFactory($http, $q) {
         getTargetsForDiscount: getTargetsForDiscount,
         getDiscount: getDiscount,
         getDiscountWithTargets: getDiscountWithTargets,
-        saveDiscounts:saveDiscounts,
+        saveDiscounts: saveDiscounts,
+        getDescriptionsForTargets: getDescriptionsForTargets,
     };
 
     function getDiscountTypes() {
@@ -63,7 +64,9 @@ function discountFactory($http, $q) {
         getDiscount(discountID).then(function(data) {
             getTargetsForDiscount(discountID).then(function(targets) {
                 data.targets = targets;
-                defer.resolve(data);
+                getDescriptionsForTargets(data.targets).then(function(twd) {
+                    defer.resolve(data);
+                });
             });
         });
 
@@ -94,9 +97,33 @@ function discountFactory($http, $q) {
                 item['id'] = idx;
             });
             var targets = _.toArray(data);
-            defer.resolve(_.where(targets, {
+            targets = _.where(targets, {
                 discountID: discountID
-            }));
+            });
+
+            getDescriptionsForTargets(targets).then(function(twd) {
+                defer.resolve(twd);
+            });
+        });
+        return defer.promise;
+    }
+
+    function getDescriptionsForTargets(targets) {
+        var defer = $q.defer();
+        var calls = [];
+        angular.forEach(targets, function(item) {
+            calls.push(businessClassFactory.selectShowItem(item.target));
+        })
+        $q.all(calls).then(function(items) {
+            var si;
+            angular.forEach(targets, function(item) {
+                si = _.findWhere(items, {
+                    showItemCode: item.target
+                });
+                if (!angular.isUndefined(si))
+                    item.description = si.description;
+            });
+            defer.resolve(targets);
         });
         return defer.promise;
     }

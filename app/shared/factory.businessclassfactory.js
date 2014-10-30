@@ -28,6 +28,7 @@ function businessClassFactory($q) {
         getAllStatuses: getAllStatuses,
         selectStatus: selectStatus,
         getAllShowItems: getAllShowItems,
+        selectShowItem: selectShowItem,
     };
 
     function getAllStatuses() {
@@ -50,6 +51,27 @@ function businessClassFactory($q) {
         return _.findWhere(statuses[type], {
             statusCode: statusCode
         });
+    }
+
+    function selectShowItem(showItemCode) {
+        var defer = $q.defer();
+
+        var deferGetShowItems = $q.defer();
+        if (showItems == undefined)
+            getAllShowItems().then(function(data) {
+                deferGetShowItems.resolve();
+            })
+        else
+            deferGetShowItems.resolve();
+
+        deferGetShowItems.promise.then(function(data) {
+            var showItem = _.findWhere(showItems, {
+                showItemCode: showItemCode
+            });
+            defer.resolve(showItem);
+        });
+
+        return defer.promise;
     }
 
     function getAllShowItems() {

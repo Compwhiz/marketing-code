@@ -33,11 +33,14 @@ function discount(discountFactory, qualifierFactory) {
     function DiscountCtrl($scope, discountFactory, qualifierFactory) {
         var vm = this;
 
+        // Properties
+        vm.targets = [];
+
         // Functions
         vm.discount = $scope.discount;
         vm.formatDiscountAmount = formatDiscountAmount;
         vm.openDiscountModal = openDiscountModal;
-        vm.targets = [];
+        vm.toggleDiscountDeleted = toggleDiscountDeleted;
 
         // Init
         discountFactory.getTargetsForDiscount(vm.discount.id).then(function(data) {
@@ -58,6 +61,10 @@ function discount(discountFactory, qualifierFactory) {
                 close_on_esc: false,
                 close_on_background_click: false
             });
+        }
+
+        function toggleDiscountDeleted() {
+            vm.discount.isDeleted = !vm.discount.isDeleted;
         }
     }
 }

@@ -8,11 +8,11 @@ nav {
 }
 .rowcolor {
     background-color: #f6f6f6;
-    padding: 5px;
+    //padding: 5px;
 }
 .altrowcolor {
     background-color: #e6e6e6;
-    padding: 5px;
+    //padding: 5px;
 }
 .red {
     color: red;
@@ -24,7 +24,7 @@ nav {
     margin-top: 2em;
 }
 .qualSelected {
-    background-color: #ffa500;
+    background-color: #71AFF0;
 }
 .qualifierOption {
     padding: 5px;
@@ -35,9 +35,18 @@ nav {
     background-color: #e6e6e6;
     padding: 1em;
 }
-.grayBorder{
-	border:1px solid #ddd;
+.grayBorder {
+    border: 1px solid #ddd;
 }
-.showItemSelectList{
-    height:150px;
+.showItemSelectList {
+    height: 150px;
+}
+div.discountMarkedAsDeleted {
+    position: absolute;
+    top: 0;
+    left: 0.9375rem;
+    right: 0.9375rem;
+    height: 100%;
+    opacity: 0.95;
+    z-index: 100;
 }

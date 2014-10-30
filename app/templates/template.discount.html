@@ -1,27 +1,52 @@
-<div class="columns small-2">
-    <input type="button" class="button small expand" value="Edit" ng-click="ctrl.openDiscountModal($parent.$index)">
-</div>
-<div class="columns small-10">
-    <div class="row">
-        <div class="columns small-3">
-            {{ctrl.displayType}} {{ctrl.displayAmount}}
+<div class="row">
+    <div class="columns">
+        <div class="discountMarkedAsDeleted panel callout text-center" ng-show="ctrl.discount.isDeleted">
+            <strong>Marked for deletion</strong>
+            <div>
+                <a class="button small" ng-click="ctrl.toggleDiscountDeleted()">
+                    <span class="fa fa-undo"></span>&nbsp;Undo
+
+                </a>
+            </div>
         </div>
-        <div class="columns small-3 end">
-            <ul class="no-bullet">
-                <li ng-repeat="target in ctrl.targets">
-                    {{target.target}}
-                </li>
-            </ul>
+        <div class="row">
+            <div class="columns small-2">
+                <input type="button" class="button small expand" value="Edit" ng-disabled="ctrl.discount.isDeleted" ng-click="ctrl.openDiscountModal($parent.$index)">
+                <div class="panel callout text-center" ng-show="$parent.$index == 1 && ctrl.discount.isDeleted">
+                    <strong>Marked for deletion.</strong>
+                </div>
+            </div>
+            <div class="columns small-10">
+                <div class="row">
+                    <div class="columns small-3">
+                        <span ng-bind="ctrl.displayType"></span>&nbsp;
+                        <span ng-bind="ctrl.displayAmount"></span>
+                    </div>
+                    <div class="columns small-7">
+                        <ul class="no-bullet">
+                            <li ng-repeat="target in ctrl.targets">
+                                <span ng-bind="target.target"></span>-
+                                <span ng-bind="target.description"></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="columns small-2">
+                        <a class="button small right alert" ng-click="ctrl.toggleDiscountDeleted()">
+                            <span class="fa fa-lg fa-times"></span>
+                        </a>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="columns">
+                        <h5>Discount Qualifiers</h5>
+                        <span ng-bind="ctrl.qualifiers"></span>
+                    </div>
+                </div>
+            </div>
+            <div id="discountEditModal{{$parent.$index}}" class="reveal-modal" data-reveal>
+                <div discount-edit="discount.id"></div>
+            </div>
         </div>
     </div>
-    <hr>
-    <div class="row">
-        <div class="columns">
-            <h5>Discount Qualifiers</h5>
-            {{ctrl.qualifiers}}
-        </div>
-    </div>
-</div>
-<div id="discountEditModal{{$parent.$index}}" class="reveal-modal" data-reveal>
-    <div discount-edit="discount.id"></div>
 </div>

@@ -9,13 +9,18 @@
     <div class="row">
         <div class="columns large-10">
             <div class="row">
-                <div class="columns small-3">Is Active</div>
+                <div class="columns small-3">Is Active
+                </div>
                 <div class="columns small-offset-1 large-5 small-8 end">
                     <!-- <div class="switch">
                         <input type="checkbox" id="cbIsActive" ng-model="ctrl.code.isActive">
                         <label for="cbIsActive"></label>
                     </div> -->
-                    <input type="button" ng-click="ctrl.code.isActive = !ctrl.code.isActive" class="button expand" ng-class="(ctrl.code.isActive) ? 'success' : 'alert'" ng-value="(ctrl.code.isActive) ? 'Active' : 'Inactive'" />
+                    <a ng-click="ctrl.code.isActive = !ctrl.code.isActive" class="button expand" ng-class="(ctrl.code.isActive) ? 'success' : 'alert'" ng-value="(ctrl.code.isActive) ? 'Active' : 'Inactive'">
+                        <div ng-show="ctrl.code.isActive">Active</div>
+                        <div ng-show="!ctrl.code.isActive">Inactive</div>
+                        <small>(click to toggle)</small>
+                    </a>
                 </div>
             </div>
         </div>
@@ -181,11 +186,13 @@
                             <div class="columns">
                                 <div class="row" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'" ng-repeat="(type, qualifiers) in ctrl.qualifiers">
                                     <div class="columns small-3">
-                                        <strong>{{ctrl.getGroupHeaderText(type)}}:</strong>
+                                        <strong ng-bind="ctrl.getGroupHeaderText(type)">:</strong>
                                     </div>
                                     <div class="columns small-9">
                                         <ul class="small-block-grid-2 large-block-grid-4">
-                                            <li ng-repeat="qualifier in qualifiers">{{qualifier.qualCode}} - {{qualifier.description}}
+                                            <li ng-repeat="qualifier in qualifiers">
+                                                <span ng-bind="qualifier.qualCode"></span>&nbsp;-
+                                                <span ng-bind="qualifier.description"></span>
                                             </li>
                                         </ul>
                                     </div>

@@ -16,7 +16,7 @@
             <strong>Code</strong>
         </a>
     </div>
-    <div class="columns small-3">
+    <div class="columns small-2">
         <a href="">
             <strong>Code Type</strong>
         </a>
@@ -26,16 +26,22 @@
     <div class="columns small-3 show-for-large-up">
         Description
     </div>
+    <!-- <div class="columns small-1"></div> -->
 </div>
 <div class="row" ng-repeat="(id,code) in main.codes" ng-class="$index % 2 == 0 ? 'rowcolor' : 'altrowcolor'">
     <div class="columns small-2">
-        <a href="/#/marketingCode/{{id}}" class="button small expand">Select</a>
+        <input type="button" ng-disabled="code.isDeleted" ng-click="main.editMarketingCode(code.id)" class="button small expand" value="Select" />
     </div>
-    <div class="columns small-2">{{code.code}}</div>
-    <div class="columns small-3">{{code.codeType}}</div>
+    <div class="columns small-2" ng-bind="code.code"></div>
+    <div class="columns small-2" ng-bind="code.codeType"></div>
     <div class="columns small-2">
         <span class="fa fa-2x" ng-class="code.isActive ? 'fa-check green' : 'fa-times red'"></span>
     </div>
-    <div class="columns large-3 small-10">
-        {{code.description}}</div>
+    <div class="columns large-3 small-11" ng-bind="code.description"></div>
+    <!-- <div class="columns small-1">
+        <a class="button alert small" ng-hide="code.isDeleted" ng-click="main.deleteCode(id)">
+            <span class="fa fa-times"></span>
+        </a>
+        <span class="fa fa-ban red fa-3x" ng-show="code.isDeleted"></span>
+    </div> -->
 </div>

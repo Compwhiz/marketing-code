@@ -1,12 +1,15 @@
 <div class="row">
     <div class="columns">
         <div class="row" ng-repeat="(type, statuses) in ctrl.statuses">
-            <h4>{{ctrl.getGroupHeaderText(type)}}</h4>
+            <h4 ng-bind="ctrl.getGroupHeaderText(type)"></h4>
             <div class="row">
                 <div class="columns panel">
                     <ul class="small-block-grid-3">
                         <li ng-repeat="status in statuses">
-                            <div class="qualifierOption" ng-click="ctrl.toggleSelected($parent.type, status.statusCode)" ng-class="ctrl.isSelected($parent.type, status.statusCode) ? 'qualSelected' : ''">{{status.statusCode}} - {{status.description}}</div>
+                            <div class="qualifierOption" ng-click="ctrl.toggleSelected($parent.type, status.statusCode)" ng-class="ctrl.isSelected($parent.type, status.statusCode) ? 'qualSelected' : ''">
+                                <span ng-bind="status.statusCode"></span>-
+                                <span ng-bind="status.description"></span>
+                            </div>
                         </li>
                     </ul>
                 </div>
